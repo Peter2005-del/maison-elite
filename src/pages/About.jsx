@@ -1,202 +1,219 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Award, Users, Sparkles, Fingerprint, Globe, ShieldCheck, Cpu } from 'lucide-react';
+import { Award, Users, Sparkles, Fingerprint, Globe, ShieldCheck, Cpu, ArrowRight, History } from 'lucide-react';
 
 const values = [
   { 
     title: 'Architectural precision', 
-    desc: 'Every structural silhouette is engineered with mathematical exactitude, adhering to the highest standards of heritage fashion.',
-    icon: Cpu
+    desc: 'Every garment is engineered with the rigor of structural architecture, ensuring a silhouette that transcends time.',
+    icon: Fingerprint 
   },
   { 
-    title: 'Decentralized Heritage', 
-    desc: 'Preserving centennial techniques while redefining modern luxury through blockchain-verified authenticity and digital sovereignty.',
-    icon: ShieldCheck
+    title: 'Heritage Narrative', 
+    desc: 'We don’t just create fashion; we weave historical documents. Each piece tells the story of its provenance.',
+    icon: History 
   },
   { 
-    title: 'Global Authority', 
-    desc: 'A borderless atelier network providing structural masterpieces that command attention across all financial ecosystems.',
-    icon: Globe
+    title: 'Digital Sovereignty', 
+    desc: 'Integrating future-finance and cross-device synchronization into the heart of the luxury experience.',
+    icon: Cpu 
   },
 ];
 
-const milestones = [
-  { year: '1984', title: 'Atelier Inception', desc: 'Maison Élite established in Paris with a focus on gold-standard craftsmanship.' },
-  { year: '2005', title: 'Digital Frontier', desc: 'Early adoption of digital couture mapping and virtual fitting protocols.' },
-  { year: '2018', title: 'Blockchain Sovereignty', desc: 'Integration of immutable heritage certificates for every haute couture piece.' },
+const timeline = [
+  { year: '2018', title: 'The Genesis', desc: 'Maison Élite was founded as a private atelier in Saint-Honoré, Paris.' },
+  { year: '2021', title: 'Global Expansion', desc: 'Opening of the flagship "Digital Ivory" galleries in New York and Tokyo.' },
+  { year: '2024', title: 'Cryptographic Era', desc: 'First luxury house to fully integrate blockchain-verified asset tracking for every piece.' },
   { year: '2026', title: 'The Future Atelier', desc: 'Launch of the unified e-commerce portal with cross-device synchronization and dual-currency settlement.' },
 ];
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)]">
+    <div className="bg-[var(--bg-primary)] overflow-hidden">
       {/* Hero Section */}
-      <section className="pt-48 pb-32 bg-black overflow-hidden relative border-b border-[var(--border-color)]">
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-[var(--accent-color)] rounded-full blur-[180px]" />
+      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=2000" 
+            alt="Atelier" 
+            className="w-full h-full object-cover opacity-40 scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-[var(--bg-primary)]" />
         </div>
         
-        <div className="container-custom relative z-10">
+        <div className="container-custom relative z-10 text-center">
+          <motion.span 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-[var(--accent-color)] tracking-[0.6em] uppercase text-[12px] font-black mb-8 block"
+          >
+            ESTABLISHED MMVIII
+          </motion.span>
+          <motion.h1 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-6xl md:text-9xl font-serif uppercase tracking-tighter text-white mb-10"
+          >
+            THE <span className="gradient-text">MAISON</span> STORY
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-xl text-white/60 max-w-2xl mx-auto font-light leading-relaxed px-4"
+          >
+            A legacy of architectural luxury, redefining the boundaries between couture, art, and the digital frontier.
+          </motion.p>
+        </div>
+        
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+           <motion.div 
+             animate={{ y: [0, 10, 0] }}
+             transition={{ duration: 2, repeat: Infinity }}
+             className="w-px h-20 bg-gradient-to-b from-[var(--accent-color)] to-transparent"
+           />
+        </div>
+      </section>
+
+      {/* Philosophy Section */}
+      <section className="py-32 md:py-48 relative">
+        <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-24 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
             >
-              <span className="text-[var(--accent-color)] tracking-[0.8em] font-black uppercase text-[12px] mb-8 block">
-                STRUCTURAL FOUNDATION
-              </span>
-              <h1 className="text-6xl md:text-9xl uppercase tracking-tighter mb-10 leading-[0.85] text-white font-serif">
-                THE FUTURE <br />
-                <span className="gradient-text">LEGACY</span>
-              </h1>
-              <div className="space-y-8 text-white/70 text-lg md:text-xl font-light leading-relaxed">
-                <p>
-                  Maison Élite stands as an architectural authority in the world of high fashion. Our philosophy is rooted in the permanent—creating structural masterpieces that transcend seasonal trends through the fusion of heritage craftsmanship and decentralized technology.
-                </p>
-                <p className="border-l-4 border-[var(--accent-color)] pl-8 italic">
-                  "We do not just create garments; we engineer second skins that empower the modern connoisseur with an aura of absolute digital and physical sovereignty."
-                </p>
+              <h2 className="text-4xl md:text-6xl uppercase tracking-tighter mb-10 leading-tight">ARCHITECTS OF <br/><span className="gradient-text">ETERNITY</span></h2>
+              <p className="text-xl text-[var(--text-secondary)] mb-12 leading-relaxed">
+                At Maison Élite, we believe that a garment is more than just fabric—it is a structural statement. Each volume we release is the result of thousands of hours of research, development, and heritage craftsmanship.
+              </p>
+              <div className="space-y-8">
+                {values.map((v, i) => (
+                  <motion.div 
+                    key={v.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex gap-6 items-start"
+                  >
+                    <div className="w-12 h-12 bg-[var(--accent-color)]/10 rounded-xl flex items-center justify-center text-[var(--accent-color)] shrink-0 border border-[var(--accent-color)]/20">
+                      <v.icon size={24} />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-black uppercase tracking-widest text-white mb-2">{v.title}</h4>
+                      <p className="text-[var(--text-muted)] text-sm leading-relaxed">{v.desc}</p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
             
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.3 }}
-              className="relative"
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative aspect-square md:aspect-[4/5] rounded-[3rem] overflow-hidden border border-[var(--border-color)] shadow-3xl"
             >
-              <div className="aspect-[3/4] rounded-[4rem] overflow-hidden border-2 border-[var(--accent-color)]/20 shadow-[-50px_50px_100px_rgba(0,0,0,0.5)] group h-full">
-                <img 
-                  src="https://images.unsplash.com/photo-1594552072238-b8a33785b261?auto=format&fit=crop&q=80&w=1000" 
-                  alt="Maison Élite Atelier" 
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 grayscale group-hover:grayscale-0"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
-                <div className="absolute inset-0 border-[20px] border-black opacity-10 pointer-events-none" />
+              <img 
+                src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&q=80&w=1200" 
+                alt="Craftsmanship" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+              <div className="absolute bottom-10 left-10 p-8 backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl max-w-xs">
+                 <Sparkles className="text-[var(--accent-color)] mb-4" />
+                 <p className="text-xs text-white/80 font-medium uppercase tracking-widest leading-loose">
+                   "Precision is not an option; it is our only language."
+                 </p>
               </div>
-
-              {/* Float Stats */}
-              <motion.div 
-                animate={{ y: [0, -20, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -bottom-12 -right-12 bg-black text-white p-10 rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,0.8)] max-w-[300px] border-8 border-[var(--accent-color)]/20 z-20"
-              >
-                <div className="flex items-center gap-6 mb-4">
-                  <p className="text-6xl font-black tracking-tighter text-[var(--accent-color)]">42</p>
-                  <div className="h-12 w-px bg-black/10" />
-                  <p className="text-[11px] font-black uppercase tracking-widest leading-tight">Elite <br/>Ateliers <br/>Worldwide</p>
-                </div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60">Verified Heritage Chain Established 1984</p>
-              </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Philosophy Section */}
-      <section className="section-padding bg-[var(--bg-secondary)] relative">
-        <div className="container-custom">
-          <div className="text-center max-w-4xl mx-auto mb-32">
-            <span className="text-[var(--accent-color)] tracking-[0.5em] font-black uppercase text-[12px] mb-8 block">CORE PRINCIPLES</span>
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white mb-10 font-serif">OUR <span className="gradient-text">SYSTEM</span></h2>
-            <p className="text-xl text-[var(--text-secondary)] font-light leading-relaxed">
-              We operate at the intersection of monochromatic elegance and cryptographic security. Our system ensures every piece is a unique architectural asset.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-16">
-            {values.map((val, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.2 }}
-                className="bg-black p-12 rounded-[3.5rem] border border-white/5 hover:border-[var(--accent-color)]/50 transition-all duration-700 shadow-2xl group text-center"
-              >
-                <div className="w-24 h-24 bg-[var(--accent-color)]/10 rounded-[2rem] flex items-center justify-center mb-10 text-[var(--accent-color)] mx-auto group-hover:scale-110 group-hover:bg-[var(--accent-color)] group-hover:text-white transition-all duration-700 shadow-xl shadow-[var(--accent-color)]/5">
-                  <val.icon size={44} />
-                </div>
-                 <h3 className="text-2xl uppercase tracking-[0.2em] mb-6 text-white font-serif">{val.title}</h3>
-                <p className="text-[var(--text-secondary)] font-light text-lg leading-relaxed">{val.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Timeline Section */}
-      <section className="section-padding bg-black overflow-hidden">
-        <div className="container-custom">
-           <div className="flex flex-col md:flex-row justify-between items-end mb-32 gap-10">
-              <div className="max-w-2xl">
-                 <span className="text-[var(--accent-color)] tracking-[0.6em] font-black uppercase text-[12px] mb-8 block">CHRONOLOGY</span>
-                 <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-white font-serif leading-none">THE <br/><span className="gradient-text">ASCENSION</span></h2>
-              </div>
-              <p className="text-xl text-white/50 font-light max-w-sm text-right">Four decades of structural evolution and technological integration.</p>
-           </div>
+      <section className="py-32 bg-[var(--bg-secondary)] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[var(--accent-color)]/5 rounded-full blur-[120px]" />
+        
+        <div className="container-custom relative z-10">
+          <div className="text-center mb-24">
+            <span className="text-[var(--accent-color)] tracking-[0.4em] uppercase text-[11px] font-black mb-4 block">OUR JOURNEY</span>
+            <h2 className="text-4xl md:text-7xl uppercase tracking-tighter">THE <span className="gradient-text">ERA</span> SCALE</h2>
+          </div>
 
-           <div className="relative">
-              {/* Central Line */}
-              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/10 hidden lg:block" />
-
-              <div className="space-y-32">
-                 {milestones.map((item, idx) => (
-                   <motion.div 
-                    key={idx}
-                    initial={{ opacity: 0, x: idx % 2 === 0 ? -50 : 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    className={`flex flex-col lg:flex-row items-center gap-10 lg:gap-20 ${idx % 2 === 0 ? '' : 'lg:flex-row-reverse'}`}
-                   >
-                      <div className="flex-1 text-center lg:text-right">
-                         <div className={`${idx % 2 === 0 ? 'lg:text-right' : 'lg:text-left'}`}>
-                            <span className="text-[var(--accent-color)] text-6xl md:text-8xl font-black tracking-tighter opacity-20 block mb-6">{item.year}</span>
-                            <h4 className="text-3xl text-white font-black uppercase tracking-widest mb-6 font-serif">{item.title}</h4>
-                            <p className="text-xl text-white/60 font-light leading-relaxed max-w-xl mx-auto lg:mx-0 inline-block">{item.desc}</p>
-                         </div>
-                      </div>
-
-                      <div className="w-20 h-20 bg-black border-4 border-[var(--accent-color)] rounded-full flex items-center justify-center text-[var(--accent-color)] font-black text-xs z-10 shrink-0 shadow-[0_0_30px_rgba(201,162,39,0.3)]">
-                         {item.year.slice(-2)}
-                      </div>
-
-                      <div className="flex-1 hidden lg:block" />
-                   </motion.div>
-                 ))}
-              </div>
-           </div>
+          <div className="relative">
+            {/* Timeline Line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/10 hidden md:block" />
+            
+            <div className="space-y-24 md:space-y-0">
+               {timeline.map((item, i) => (
+                 <motion.div 
+                   key={item.year}
+                   initial={{ opacity: 0, y: 50 }}
+                   whileInView={{ opacity: 1, y: 0 }}
+                   viewport={{ once: true }}
+                   transition={{ delay: i * 0.1 }}
+                   className={`flex flex-col md:flex-row gap-12 items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
+                 >
+                    <div className="md:w-1/2 flex justify-center md:justify-end md:pr-12 group">
+                       <div className={`md:text-right ${i % 2 === 1 ? 'md:text-left md:pl-12' : ''}`}>
+                          <span className="text-6xl md:text-8xl font-serif font-black text-white/5 group-hover:text-[var(--accent-color)]/20 transition-colors duration-700">{item.year}</span>
+                          <h3 className="text-xl font-black uppercase tracking-widest text-white mt-[-2rem]">{item.title}</h3>
+                          <p className="text-[var(--text-muted)] text-sm max-w-md mt-4 leading-relaxed">{item.desc}</p>
+                       </div>
+                    </div>
+                    
+                    <div className="relative flex items-center justify-center shrink-0">
+                       <div className="w-4 h-4 rounded-full bg-[var(--accent-color)] shadow-[0_0_20px_var(--accent-color)] z-10" />
+                       <div className="absolute w-12 h-12 rounded-full border border-[var(--accent-color)]/20 animate-ping" />
+                    </div>
+                    
+                    <div className="md:w-1/2" />
+                 </motion.div>
+               ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 md:py-48 bg-[var(--bg-secondary)] relative overflow-hidden text-center">
-        <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-[var(--accent-color)] rounded-full blur-[150px]" />
-        </div>
-        <div className="container-custom relative z-10">
+      {/* Global Presence */}
+      <section className="py-48 text-center bg-black">
+        <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             className="max-w-4xl mx-auto"
           >
-            <Sparkles className="text-[var(--accent-color)] mx-auto mb-12 animate-pulse" size={64} />
-            <h2 className="text-5xl md:text-[6rem] font-black uppercase tracking-tighter mb-12 leading-[0.85] text-white font-serif">
-              OWN THE <br/><span className="gradient-text">ARCHITECTURE</span>
-            </h2>
-            <div className="flex flex-wrap justify-center gap-8">
-              <Link to="/contact" className="btn-primary btn-large shadow-2xl">
-                BOOK ATELIER SESSION
-              </Link>
-              <Link to="/shop" className="btn-outline btn-large">
-                BROWSE ARCHIVES
-              </Link>
-            </div>
+             <Globe className="text-[var(--accent-color)] mx-auto mb-10" size={64} />
+             <h2 className="text-5xl md:text-8xl uppercase tracking-tighter mb-10">BORN IN PARIS. <br/><span className="gradient-text">BEYOND BORDERS.</span></h2>
+             <p className="text-xl text-[var(--text-secondary)] font-light leading-relaxed mb-16 px-4">
+               With studios in Paris, flagship galleries in New York and Tokyo, and a global distribution network, Maison Élite serves the world’s most discerning collectors.
+             </p>
+             <Link to="/contact" className="btn-primary group">
+                RESERVE AN APPOINTMENT <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
+             </Link>
           </motion.div>
         </div>
       </section>
+      
+      {/* Certifications Bar */}
+      <div className="bg-black py-16 border-t border-white/5">
+        <div className="container-custom flex flex-wrap justify-center gap-12 md:gap-24 opacity-30 hover:opacity-100 transition-opacity">
+           <div className="flex items-center gap-3 grayscale hover:grayscale-0 transition-all cursor-crosshair">
+              <ShieldCheck size={20} /> <span className="text-[10px] font-black uppercase tracking-[0.4em]">VERIFIED ATHENTIC</span>
+           </div>
+           <div className="flex items-center gap-3 grayscale hover:grayscale-0 transition-all cursor-crosshair">
+              <History size={20} /> <span className="text-[10px] font-black uppercase tracking-[0.4em]">LEDGER PROVENANCE</span>
+           </div>
+           <div className="flex items-center gap-3 grayscale hover:grayscale-0 transition-all cursor-crosshair">
+              <Award size={20} /> <span className="text-[10px] font-black uppercase tracking-[0.4em]">ISO-9001 CRAFT</span>
+           </div>
+        </div>
+      </div>
     </div>
   );
 }
