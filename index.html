@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MAISON ÉLITE | Modern Luxury Boutique</title>
+    <meta name="description" content="Maison Élite - Modern premium luxury, architectural fashion, and digital sovereignty.">
+    <meta name="theme-color" content="#000000">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Outfit:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    
+    <style>
+      :root {
+        --loader-bg: #000000; /* Deep Black */
+        --loader-accent: #6366F1; /* Electric Indigo */
+        --loader-text: #FFFFFF; /* Pure White */
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--loader-bg);
+        overflow: hidden;
+        font-family: "GFS Didot", "Inter", sans-serif;
+      }
+      
+      #loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: var(--loader-bg);
+        transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s ease;
+      }
+      
+      #loader.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      
+      .loader-logo {
+        font-size: 1.5rem;
+        font-weight: 900;
+        letter-spacing: 0.8em;
+        color: var(--loader-text);
+        margin-bottom: 3.5rem;
+        text-transform: uppercase;
+        animation: logo-reveal 1.2s ease-out forwards;
+        margin-right: -0.8em; /* Offset for letter spacing */
+      }
+      
+      .loader-bar-bg {
+        width: 160px;
+        height: 2px;
+        background: rgba(201, 162, 39, 0.1);
+        position: relative;
+        overflow: hidden;
+        border-radius: 4px;
+      }
+      
+      .loader-bar-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0;
+        background: var(--loader-accent);
+        animation: fill-bar 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
+      
+      .loader-status {
+        font-size: 0.65rem;
+        letter-spacing: 0.5em;
+        color: var(--loader-accent);
+        margin-top: 2rem;
+        text-transform: uppercase;
+        font-weight: 900;
+        opacity: 0.8;
+      }
+      
+      @keyframes fill-bar {
+        0% { width: 0; }
+        100% { width: 100%; }
+      }
+      
+      @keyframes logo-reveal {
+        from { letter-spacing: 1.2em; opacity: 0; filter: blur(10px); }
+        to { letter-spacing: 0.8em; opacity: 1; filter: blur(0); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loader">
+      <div class="loader-logo">MAISON ÉLITE</div>
+      <div class="loader-bar-bg">
+        <div class="loader-bar-fill"></div>
+      </div>
+      <div class="loader-status">INITIALIZING ATELIER</div>
+    </div>
+    
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    
+    <script>
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          document.getElementById('loader').classList.add('hidden');
+          document.body.style.overflow = 'auto';
+        }, 1500);
+      });
+    </script>
+  </body>
+</html>
