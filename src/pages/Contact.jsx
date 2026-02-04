@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle, Sparkles, Globe, ShieldCheck, MessageSquare, ArrowRight, Smartphone, Coins } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, Globe, ShieldCheck, MessageSquare, Star, RefreshCcw } from 'lucide-react';
 
 const contactInfo = [
-  { icon: Mail, title: 'DIGITAL ATELIER', detail: 'atelier@maisonelite.com', sub: 'Instant Response via encrypted relay' },
-  { icon: Phone, title: 'CONCIERGE LINE', detail: '+1 (888) MAISON-E', sub: 'Priority for Indigo-Tier Members' },
-  { icon: MapPin, title: 'PHYSICAL HOUSE', detail: '30 Avenue Montaigne, Paris', sub: 'By appointment only' },
+  { icon: Mail, title: 'ATELIER INQUIRIES', detail: 'atelier@maisonelite.com', sub: 'Direct concierge relay' },
+  { icon: Phone, title: 'CONCIERGE LINE', detail: '+1 (888) MAISON-E', sub: 'Priority for Royal-Tier Patrons' },
+  { icon: MapPin, title: 'PHYSICAL HOUSE', detail: '30 Avenue Montaigne, Paris', sub: 'By private appointment only' },
 ];
 
 const serviceOptions = [
   'Bespoke Bridal Couture',
   'Private Evening Gown Commission',
   'Heritage Tailoring Session',
-  'Interstellar Styling Advisory',
-  'Digital Portrait & Fitting',
-  'General High-Level Inquiry',
+  'Signature Styling Advisory',
+  'Private Gallery Viewing',
+  'General Boutique Inquiry',
 ];
 
 export default function Contact() {
@@ -30,13 +30,12 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitted(true);
       setFormData({ name: '', email: '', service: '', message: '' });
-      setTimeout(() => setSubmitted(false), 5000);
-    }, 2000);
+      setTimeout(() => setSubmitted(false), 8000);
+    }, 2500);
   };
 
   const handleChange = (e) => {
@@ -44,42 +43,38 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg-primary)] pt-32 pb-20 overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[var(--accent-color)]/5 rounded-full blur-[150px] -z-10" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[100px] -z-10" />
-
-      <div className="container-custom">
+    <div className="min-h-screen bg-[#FDFCF8] pt-40 pb-20 selection:bg-black selection:text-white">
+      <div className="container-custom relative z-10 mx-auto max-w-7xl">
         {/* Header Section */}
-        <div className="max-w-4xl mb-24">
+        <div className="mb-32 max-w-5xl">
            <motion.span 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-[var(--accent-color)] tracking-[0.6em] uppercase text-[12px] font-black mb-8 block"
+            className="mb-10 block text-[10px] font-black uppercase tracking-[0.6em] text-[var(--accent-color)]"
            >
-            ESTABLISH CONTACT
+            LA MAISON ÉLITE CONCIERGE
            </motion.span>
            <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-6xl md:text-[9rem] leading-[0.8] font-serif uppercase tracking-tighter text-white mb-10"
+            className="mb-12 font-serif text-7xl font-normal uppercase tracking-tighter text-black md:text-9xl leading-[0.8]"
            >
-            BESPOKE <br/><span className="gradient-text">INQUIRY</span>
+            BESPOKE <br/><span className="italic opacity-60">INQUIRY</span>
            </motion.h1>
            <motion.p 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-[var(--text-secondary)] font-light leading-relaxed max-w-2xl"
+            className="max-w-2xl font-light leading-snug text-black/60 text-xl md:text-3xl"
            >
-            Our concierge team is standing by to facilitate your next acquisition. For urgent private decrees, please include your Indigo membership cipher.
+            Our dedicated team is standing by to facilitate your next archival acquisition.
            </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-20">
+        <div className="grid gap-24 lg:grid-cols-12">
           {/* Contact Information Cards */}
-          <div className="lg:col-span-5 space-y-10">
+          <div className="space-y-12 lg:col-span-5">
             {contactInfo.map((info, i) => (
               <motion.div
                 key={info.title}
@@ -87,37 +82,34 @@ export default function Contact() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-[var(--bg-secondary)] p-10 rounded-[2.5rem] border border-[var(--border-color)] group hover:border-[var(--accent-color)] transition-all flex gap-8 items-start"
+                className="group flex gap-10 border border-black/5 bg-white p-12 transition-all hover:border-[var(--accent-color)] shadow-sm hover:shadow-xl"
               >
-                <div className="w-16 h-16 bg-[var(--accent-color)]/10 rounded-2xl flex items-center justify-center text-[var(--accent-color)] group-hover:scale-110 transition-transform">
-                  <info.icon size={32} />
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center border border-black/5 bg-gray-50 text-[var(--accent-color)] transition-all duration-500 group-hover:bg-black group-hover:text-white">
+                  <info.icon size={26} />
                 </div>
                 <div>
-                   <h3 className="text-[12px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] mb-2">{info.title}</h3>
-                   <p className="text-xl font-bold text-white mb-1">{info.detail}</p>
-                   <p className="text-xs text-[var(--text-muted)] font-medium">{info.sub}</p>
+                   <h3 className="mb-3 text-[10px] font-black uppercase tracking-[0.4em] text-black/30">{info.title}</h3>
+                   <p className="mb-1 text-xl font-bold text-black">{info.detail}</p>
+                   <p className="text-xs font-medium text-black/40">{info.sub}</p>
                 </div>
               </motion.div>
             ))}
 
-            {/* Global Time / Status */}
-            <div className="bg-black/40 border border-white/5 p-10 rounded-[2.5rem] mt-12 overflow-hidden relative group">
-               <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-30 transition-opacity">
-                  <Globe size={180} />
-               </div>
+            {/* Global Status Banner - Minimalized */}
+            <div className="relative mt-16 overflow-hidden bg-black p-12 text-white shadow-2xl">
                <div className="relative z-10">
-                  <div className="flex items-center gap-3 mb-8">
-                     <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-                     <span className="text-[10px] font-black uppercase tracking-widest text-green-500">Global Atelier Online</span>
+                  <div className="mb-10 flex items-center gap-4">
+                     <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
+                     <span className="text-[10px] font-black uppercase tracking-[0.5em] text-green-500">GLOBAL ATELIER ACTIVE</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-8">
+                  <div className="grid grid-cols-2 gap-10">
                      <div>
-                        <p className="text-[10px] text-[var(--text-muted)] uppercase tracking-widest mb-1">Paris (HQ)</p>
-                        <p className="text-xl font-black text-white">01:46 AM</p>
+                        <p className="mb-2 text-[10px] font-black uppercase tracking-widest text-white/40">PARIS HQ</p>
+                        <p className="font-serif text-3xl tracking-tighter opacity-80">01:46 AM</p>
                      </div>
                      <div>
-                        <p className="text-[10px] text-[var(--text-muted)] uppercase tracking-widest mb-1">New York</p>
-                        <p className="text-xl font-black text-white">07:46 PM</p>
+                        <p className="mb-2 text-[10px] font-black uppercase tracking-widest text-white/40">LONDON</p>
+                        <p className="font-serif text-3xl tracking-tighter opacity-80">12:46 AM</p>
                      </div>
                   </div>
                </div>
@@ -127,13 +119,11 @@ export default function Contact() {
           {/* Contact Form Section */}
           <div className="lg:col-span-7">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="bg-[var(--bg-card)] p-12 md:p-20 rounded-[4rem] border border-[var(--border-color)] shadow-3xl relative overflow-hidden"
+              className="relative overflow-hidden border border-black/5 bg-white p-12 shadow-xl md:p-20"
             >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent-color)]/5 rounded-bl-[100%] pointer-events-none" />
-              
               <AnimatePresence mode="wait">
                 {!submitted ? (
                   <motion.form 
@@ -142,123 +132,65 @@ export default function Contact() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onSubmit={handleSubmit} 
-                    className="space-y-10"
+                    className="space-y-12"
                   >
-                    <div className="grid md:grid-cols-2 gap-10">
-                      <div className="space-y-3">
-                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-2">Identify Yourself</label>
-                        <input 
-                          required
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          type="text" 
-                          placeholder="ELENA MOREAU"
-                          className="form-input py-6 text-lg"
-                        />
+                    <div className="grid gap-12 md:grid-cols-2">
+                      <div className="space-y-4">
+                        <label className="ml-2 text-[9px] font-black uppercase tracking-[0.5em] text-black/30">Your Identity</label>
+                        <input required name="name" value={formData.name} onChange={handleChange} type="text" placeholder="Full Name" className="h-16 w-full border-b border-black/10 text-[11px] font-bold uppercase tracking-widest bg-transparent outline-none focus:border-black transition-all" />
                       </div>
-                      <div className="space-y-3">
-                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-2">Digital Address</label>
-                        <input 
-                          required
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          type="email" 
-                          placeholder="ATELIER@CLIENT.COM"
-                          className="form-input py-6 text-lg"
-                        />
+                      <div className="space-y-4">
+                        <label className="ml-2 text-[9px] font-black uppercase tracking-[0.5em] text-black/30">Private Address</label>
+                        <input required name="email" value={formData.email} onChange={handleChange} type="email" placeholder="Email Address" className="h-16 w-full border-b border-black/10 text-[11px] font-bold uppercase tracking-widest bg-transparent outline-none focus:border-black transition-all" />
                       </div>
                     </div>
 
-                    <div className="space-y-3">
-                      <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-2">Nature of Request</label>
-                      <select 
-                        required
-                        name="service"
-                        value={formData.service}
-                        onChange={handleChange}
-                        className="form-input py-6 text-lg appearance-none cursor-pointer"
-                      >
-                        <option value="" disabled>SELECT COMMISSION TYPE</option>
+                    <div className="space-y-4">
+                      <label className="ml-2 text-[9px] font-black uppercase tracking-[0.5em] text-black/30">Commission Category</label>
+                      <select required name="service" value={formData.service} onChange={handleChange} className="h-16 w-full border-b border-black/10 bg-transparent text-[10px] font-black uppercase tracking-widest outline-none appearance-none cursor-pointer focus:border-black transition-all" >
+                        <option value="" disabled>SELECT INQUIRY TYPE</option>
                         {serviceOptions.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                       </select>
                     </div>
 
-                    <div className="space-y-3">
-                      <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-2">Your Detailed Manifesto</label>
-                      <textarea 
-                        required
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        rows="5" 
-                        placeholder="TELL US ABOUT YOUR VISION..."
-                        className="form-input py-6 text-lg resize-none"
-                      />
+                    <div className="space-y-4">
+                      <label className="ml-2 text-[9px] font-black uppercase tracking-[0.5em] text-black/30">Detailed Manifesto</label>
+                      <textarea required name="message" value={formData.message} onChange={handleChange} rows="4" placeholder="Enter your requirements..." className="w-full border-b border-black/10 bg-transparent text-[11px] font-bold uppercase tracking-widest outline-none resize-none py-4 focus:border-black transition-all" />
                     </div>
 
-                    <div className="flex items-center gap-4 py-4">
-                       <ShieldCheck className="text-green-500/50" size={18} />
-                       <p className="text-[9px] text-[var(--text-muted)] font-black uppercase tracking-widest">
-                         Information is processed via end-to-end RSA encryption protocols.
-                       </p>
+                    <div className="flex items-center gap-4 py-4 opacity-50">
+                       <ShieldCheck className="text-black" size={18} />
+                       <p className="text-[9px] font-black uppercase tracking-[0.2em]">Confidential Boutique Correspondence Protocols Active</p>
                     </div>
 
-                    <button 
-                      type="submit" 
-                      disabled={isSubmitting}
-                      className="w-full btn-primary h-20 text-[11px] font-black tracking-[0.5em] shadow-2xl shadow-[var(--accent-color)]/20"
-                    >
+                    <button type="submit" disabled={isSubmitting} className="h-20 w-full bg-black text-[11px] font-black uppercase tracking-[0.6em] text-white shadow-2xl transition-all hover:bg-[var(--accent-color)]" >
                       {isSubmitting ? (
-                        <div className="flex items-center gap-4">
-                           <RefreshCcw className="animate-spin" size={20} /> ENCRYPTING...
+                        <div className="flex items-center justify-center gap-4">
+                           <RefreshCcw className="animate-spin" size={18} /> TRANSMITTING...
                         </div>
                       ) : (
-                        <div className="flex items-center gap-4">
-                           DISPATCH INQUIRY <Send size={18} />
+                        <div className="flex items-center justify-center gap-4">
+                           SUBMIT INQUIRY <Send size={18} />
                         </div>
                       )}
                     </button>
                   </motion.form>
                 ) : (
-                  <motion.div 
-                    key="success"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-20"
-                  >
-                    <div className="w-32 h-32 bg-green-500/10 border-2 border-green-500/20 rounded-full flex items-center justify-center mx-auto mb-10 shadow-[0_0_50px_rgba(34,197,94,0.2)]">
-                       <CheckCircle size={64} className="text-green-500" />
+                  <motion.div key="success" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="py-20 text-center" >
+                    <div className="mx-auto mb-10 flex h-24 w-24 items-center justify-center rounded-full border border-black/10 bg-gray-50">
+                       <CheckCircle size={40} className="text-black" />
                     </div>
-                    <h2 className="text-4xl font-black uppercase tracking-tighter mb-6">MANIFESTO DISPATCHED</h2>
-                    <p className="text-[var(--text-secondary)] text-lg mb-12 max-w-sm mx-auto leading-relaxed">
-                      Your inquiry has been encrypted and filed in our high-priority ledger. A concierge representative will be in contact shortly.
+                    <h2 className="mb-6 font-serif text-5xl uppercase tracking-tight">Inquiry Received</h2>
+                    <p className="mx-auto mb-12 max-w-sm font-light leading-relaxed text-black/40 text-lg">
+                      Your request has been documented in the archive. A Maison representative will contact you for a private consultation.
                     </p>
-                    <button 
-                      onClick={() => setSubmitted(false)}
-                      className="btn-outline h-14 px-10"
-                    >
-                      SEND ANOTHER REQUEST
+                    <button onClick={() => setSubmitted(false)} className="h-16 border border-black px-12 text-[10px] font-black uppercase tracking-widest hover:bg-black hover:text-white transition-all" >
+                      New Request
                     </button>
                   </motion.div>
                 )}
               </AnimatePresence>
             </motion.div>
-
-            {/* Bottom Support Icons */}
-            <div className="grid grid-cols-3 gap-6 mt-12">
-               {[
-                 { icon: Smartphone, label: 'Secure App' },
-                 { icon: Coins, label: 'Web3 Wallet' },
-                 { icon: MessageSquare, label: 'Live Portal' }
-               ].map(item => (
-                 <div key={item.label} className="bg-white/5 border border-white/5 py-6 rounded-3xl flex flex-col items-center gap-3 opacity-40 hover:opacity-100 transition-all cursor-crosshair">
-                    <item.icon size={20} className="text-[var(--accent-color)]" />
-                    <span className="text-[9px] font-black uppercase tracking-widest">{item.label}</span>
-                 </div>
-               ))}
-            </div>
           </div>
         </div>
       </div>

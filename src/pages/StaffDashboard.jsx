@@ -15,7 +15,10 @@ import {
   Eye,
   RefreshCw,
   MoreVertical,
-  X
+  X,
+  Plus,
+  Truck,
+  ArrowRight
 } from 'lucide-react';
 
 const mockOrders = [
@@ -47,60 +50,64 @@ export default function StaffDashboard() {
   const pendingOrders = orders.filter(o => o.status === 'Pending').length;
 
   return (
-    <div className="min-h-screen pt-32 pb-20 px-4 md:px-12 bg-[var(--bg-primary)]">
+    <div className="min-h-screen pt-32 pb-20 px-4 md:px-12 bg-[#FDFCF8]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+        <div className="mb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-10">
           <div>
-            <span className="text-[var(--accent-color)] font-black text-[10px] uppercase tracking-[0.4em] mb-4 block">STAFF PORTAL</span>
-            <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">OPERATIONS <span className="gradient-text">DESK</span></h1>
-            <p className="text-[var(--text-muted)] text-sm font-medium uppercase tracking-widest mt-2 px-1">Active Personnel: {user?.email?.split('@')[0] || 'Member'}</p>
+            <span className="text-[var(--accent-color)] font-black text-[10px] uppercase tracking-[0.5em] mb-4 block">Maison Personnel Hub</span>
+            <h1 className="text-4xl md:text-7xl font-serif uppercase tracking-tighter">BOUTIQUE <span className="gradient-text italic font-normal">OPERATIONS</span></h1>
+            <div className="flex items-center gap-4 mt-6">
+                <div className="w-10 h-10 rounded-full bg-white border border-[var(--border-color)] flex items-center justify-center text-[var(--accent-color)] shadow-sm">
+                   <User size={18} />
+                </div>
+                <p className="text-[var(--text-primary)] text-[11px] font-black uppercase tracking-widest">Logged: {user?.email?.split('@')[0] || 'Member'}</p>
+            </div>
           </div>
           <div className="flex gap-4">
-            <button className="btn-primary">
-              <ShoppingCart size={18} /> REGISTER SALE
+            <button className="btn-primary shadow-xl h-16 px-10">
+              <Plus size={20} /> REGISTER NEW COMMISSION
             </button>
           </div>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        {/* Stats Grid - Brighter & Premium */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {[
-            { label: 'Today\'s Sales', value: '$18,349', icon: DollarSign, color: 'text-green-500', bg: 'bg-green-500/10' },
-            { label: 'Inventory Out', value: '24 Units', icon: Package, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-            { label: 'Pending Action', value: pendingOrders, icon: Clock, color: 'text-[var(--accent-color)]', bg: 'bg-[var(--accent-color)]/10' },
-            { label: 'Supply Alert', value: lowStockProducts.length, icon: AlertCircle, color: 'text-red-500', bg: 'bg-red-500/10' },
+            { label: 'BOUTIQUE SALES', value: '$18,349', icon: DollarSign, color: 'text-green-600', bg: 'bg-green-50' },
+            { label: 'ARTICLES OUT', value: '24 Units', icon: Package, color: 'text-blue-600', bg: 'bg-blue-50' },
+            { label: 'PENDING TASKS', value: pendingOrders, icon: Clock, color: 'text-[var(--accent-color)]', bg: 'bg-[var(--accent-color)]/5' },
+            { label: 'STOCK ALERTS', value: lowStockProducts.length, icon: AlertCircle, color: 'text-red-500', bg: 'bg-red-50' },
           ].map((stat, idx) => (
             <motion.div 
               key={idx}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className="bg-[var(--bg-card)] p-8 rounded-2xl border border-[var(--border-color)] shadow-xl relative overflow-hidden group hover:border-[var(--accent-color)] transition-all"
+              className="bg-white p-10 rounded-[2.5rem] border border-[var(--border-color)] shadow-sm hover:shadow-xl hover:border-[var(--accent-color)] transition-all group overflow-hidden relative"
             >
-              <div className="absolute top-0 right-0 w-16 h-16 bg-[var(--accent-color)]/5 rounded-bl-full pointer-events-none" />
-              <div className="flex justify-between items-start mb-6">
-                <div className={`p-4 rounded-xl border border-current opacity-70 ${stat.bg} ${stat.color}`}>
-                  <stat.icon size={20} />
+              <div className="flex justify-between items-start mb-8 relative z-10">
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center border border-current opacity-70 ${stat.bg} ${stat.color}`}>
+                  <stat.icon size={22} />
                 </div>
               </div>
-              <h3 className="text-3xl font-black mb-1">{stat.value}</h3>
-              <p className="text-[var(--text-muted)] text-[10px] font-black uppercase tracking-widest">{stat.label}</p>
+              <h3 className="text-4xl font-serif text-black mb-1 relative z-10">{stat.value}</h3>
+              <p className="text-[var(--text-muted)] text-[9px] font-black uppercase tracking-[0.3em] relative z-10">{stat.label}</p>
             </motion.div>
           ))}
         </div>
 
-        {/* Tabs & Search Bar */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
-           <div className="flex gap-3 bg-[var(--bg-secondary)] p-1.5 rounded-xl border border-[var(--border-color)]">
+        {/* Filters & Actions */}
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-12">
+           <div className="flex gap-4 bg-white p-2 rounded-2xl border border-[var(--border-color)] shadow-sm">
             {['orders', 'inventory', 'customers'].map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] whitespace-nowrap transition-all ${
+                className={`px-8 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] whitespace-nowrap transition-all ${
                   activeTab === tab 
-                    ? 'bg-[var(--accent-color)] text-[var(--accent-contrast)] shadow-lg' 
-                    : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                    ? 'bg-[var(--accent-color)] text-white shadow-xl' 
+                    : 'text-[var(--text-muted)] hover:text-[var(--accent-color)] hover:bg-[var(--bg-secondary)]'
                 }`}
               >
                 {tab}
@@ -108,75 +115,78 @@ export default function StaffDashboard() {
             ))}
           </div>
 
-          <div className="relative w-full md:max-w-xs group">
-             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)] group-focus-within:text-[var(--accent-color)] transition-colors" size={16} />
+          <div className="relative w-full lg:max-w-md group">
+             <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-[var(--accent-color)] transition-colors" size={20} />
              <input 
               type="text" 
-              placeholder="QUICK SEARCH..." 
+              placeholder="FILTER OPERATIONS LEDGER..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-[var(--bg-card)] border border-[var(--border-color)] focus:border-[var(--accent-color)] text-[10px] font-black uppercase tracking-widest outline-none transition-all rounded-xl shadow-sm"
+              className="w-full pl-16 pr-6 py-4 bg-white border border-[var(--border-color)] focus:border-[var(--accent-color)] text-[10px] font-black uppercase tracking-[0.4em] outline-none transition-all rounded-2xl shadow-sm"
              />
           </div>
         </div>
 
-        {/* Content Area */}
+        {/* Content Section */}
         <AnimatePresence mode="wait">
           {activeTab === 'orders' && (
             <motion.div
               key="orders-tab"
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 10 }}
-              className="bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)] overflow-hidden shadow-2xl"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              className="bg-white rounded-[3rem] border border-[var(--border-color)] overflow-hidden shadow-sm"
             >
-              <div className="overflow-x-auto">
-                <table className="w-full text-left">
-                  <thead className="bg-[var(--bg-secondary)] text-[10px] font-black uppercase tracking-[0.3em] text-[var(--text-muted)] border-b border-[var(--border-color)]">
+              <div className="overflow-x-auto px-8 py-4">
+                <table className="w-full text-left border-separate border-spacing-y-4">
+                  <thead className="text-[10px] font-black uppercase tracking-[0.5em] text-[var(--text-muted)]">
                     <tr>
                       <th className="p-6">ID</th>
-                      <th className="p-6">Client</th>
-                      <th className="p-6">Line Items</th>
+                      <th className="p-6">Client Identity</th>
+                      <th className="p-6">Line Articles</th>
                       <th className="p-6">Total Val</th>
-                      <th className="p-6">Timestamp</th>
-                      <th className="p-6">Status</th>
+                      <th className="p-6">Operational Status</th>
                       <th className="p-6 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[var(--border-color)]">
+                  <tbody>
                     {filteredOrders.map((order) => (
-                      <tr key={order.id} className="hover:bg-[var(--bg-secondary)]/30 transition-colors group">
-                        <td className="p-6">
-                           <span className="text-[11px] font-bold text-[var(--accent-color)]">{order.id}</span>
+                      <tr key={order.id} className="bg-[var(--bg-secondary)]/30 hover:bg-white border-y border-[var(--border-color)] transition-all group">
+                        <td className="p-6 rounded-l-2xl">
+                           <span className="text-[11px] font-black text-[var(--accent-color)] tracking-widest">{order.id}</span>
                         </td>
                         <td className="p-6">
-                           <span className="font-black text-xs uppercase tracking-widest">{order.customer}</span>
+                           <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-full bg-white border border-[var(--border-color)] flex items-center justify-center text-[10px] font-black">{order.customer[0]}</div>
+                              <span className="font-bold text-sm text-black">{order.customer}</span>
+                           </div>
                         </td>
                         <td className="p-6">
-                           <span className="text-xs font-bold text-[var(--text-muted)]">{order.items} Articles</span>
+                           <span className="text-xs font-bold text-[var(--text-muted)] uppercase tracking-widest">{order.items} Articles</span>
                         </td>
                         <td className="p-6">
-                           <span className="text-xs font-bold">${order.total.toLocaleString()}</span>
+                           <span className="text-sm font-black text-black">${order.total.toLocaleString()}</span>
                         </td>
-                        <td className="p-6">
-                           <span className="text-[10px] font-bold uppercase text-[var(--text-muted)]">{order.time}</span>
-                        </td>
-                        <td className="p-6">
-                           <span className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${
-                             order.status === 'Completed' ? 'bg-green-500/10 text-green-500 border-green-500/20' : 
-                             order.status === 'Processing' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' : 
-                             'bg-orange-500/10 text-orange-500 border-orange-500/20'
+                        <td className="p-6 text-center">
+                           <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.2em] border ${
+                             order.status === 'Completed' ? 'bg-green-50 text-green-600 border-green-100' : 
+                             order.status === 'Processing' ? 'bg-blue-50 text-blue-600 border-blue-100' : 
+                             'bg-amber-50 text-amber-600 border-amber-100'
                            }`}>
+                             <div className={`w-1.5 h-1.5 rounded-full ${order.status === 'Completed' ? 'bg-green-500' : 'bg-current animate-pulse'}`} />
                              {order.status}
-                           </span>
+                           </div>
                         </td>
-                        <td className="p-6 text-right">
-                          <div className="flex items-center justify-end gap-3 text-[var(--text-muted)]">
-                             <button className="p-2 hover:bg-[var(--bg-secondary)] rounded-lg hover:text-[var(--accent-color)] transition-all">
-                               <CheckCircle size={18} onClick={() => handleStatusChange(order.id, 'Completed')} />
+                        <td className="p-6 text-right rounded-r-2xl">
+                          <div className="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                             <button 
+                               onClick={() => handleStatusChange(order.id, 'Completed')}
+                               className="w-10 h-10 bg-white shadow-sm border border-[var(--border-color)] rounded-xl flex items-center justify-center text-green-600 hover:bg-green-600 hover:text-white transition-all"
+                             >
+                               <CheckCircle size={18} />
                              </button>
-                             <button className="p-2 hover:bg-[var(--bg-secondary)] rounded-lg hover:text-[var(--text-primary)] transition-all">
-                               <MoreVertical size={18} />
+                             <button className="w-10 h-10 bg-white shadow-sm border border-[var(--border-color)] rounded-xl flex items-center justify-center text-[var(--accent-color)] hover:bg-[var(--accent-color)] hover:text-white transition-all">
+                               <RefreshCw size={18} />
                              </button>
                           </div>
                         </td>
@@ -189,18 +199,21 @@ export default function StaffDashboard() {
           )}
 
           {activeTab === 'inventory' && (
-            <motion.div key="inv" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <motion.div key="inv" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                {products.map(product => (
-                 <div key={product.id} className="bg-[var(--bg-card)] p-6 rounded-2xl border border-[var(--border-color)] flex items-center gap-6 group hover:border-[var(--accent-color)] transition-all shadow-xl">
-                    <div className="w-20 h-20 rounded-xl overflow-hidden border border-[var(--border-color)] shrink-0">
+                 <div key={product.id} className="bg-white p-8 rounded-[2.5rem] border border-[var(--border-color)] flex items-center gap-8 group hover:border-[var(--accent-color)] transition-all shadow-sm hover:shadow-xl">
+                    <div className="w-20 h-24 bg-[var(--bg-secondary)] rounded-2xl overflow-hidden border border-[var(--border-color)] shrink-0 shadow-sm transition-transform group-hover:scale-105">
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                     </div>
-                    <div>
-                       <h4 className="font-black text-xs uppercase tracking-widest mb-1">{product.name}</h4>
-                       <p className="text-[10px] text-[var(--text-muted)] font-bold mb-3">{product.category}</p>
-                       <div className="flex items-center gap-4">
-                          <span className="text-xs font-bold text-[var(--accent-color)]">${product.price}</span>
-                          <span className={`text-[10px] font-black uppercase ${product.stock < 10 ? 'text-red-500' : 'text-green-500'}`}>Stock: {product.stock}</span>
+                    <div className="flex-1">
+                       <h4 className="font-bold text-sm text-black mb-1 group-hover:text-[var(--accent-color)] transition-colors">{product.name}</h4>
+                       <p className="text-[9px] text-[var(--text-muted)] font-black uppercase tracking-widest mb-4">{product.category}</p>
+                       <div className="flex items-center justify-between">
+                          <span className="text-sm font-black text-black">${product.price.toLocaleString()}</span>
+                          <div className="flex items-center gap-2">
+                             <div className={`w-1.5 h-1.5 rounded-full ${product.stock < 10 ? 'bg-red-500 animate-bounce' : 'bg-green-500'}`} />
+                             <span className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)]">QTY: {product.stock}</span>
+                          </div>
                        </div>
                     </div>
                  </div>
@@ -209,10 +222,13 @@ export default function StaffDashboard() {
           )}
 
           {activeTab === 'customers' && (
-            <motion.div key="cust" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-32 bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)]">
-               <User className="mx-auto text-[var(--accent-color)] mb-8 opacity-40 shadow-2xl" size={64} />
-               <h3 className="text-2xl font-black uppercase tracking-tighter mb-4">Client Portfolio</h3>
-               <p className="text-[var(--text-muted)] text-[10px] font-black uppercase tracking-[0.3em] px-4">Direct Merchant Communication & Heritage Profiles</p>
+            <motion.div key="cust" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-48 bg-white rounded-[4rem] border border-[var(--border-color)] shadow-sm">
+               <div className="w-24 h-24 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center mx-auto mb-10 text-[var(--accent-color)] border border-[var(--border-color)]">
+                  <User size={40} />
+               </div>
+               <h3 className="text-4xl font-serif uppercase tracking-tight mb-4">Registry of Patrons</h3>
+               <p className="text-[var(--text-muted)] text-[11px] font-black uppercase tracking-[0.5em] mb-12">Authorized Heritage Profiles</p>
+               <button className="btn-primary">DOWNLOAD COMPREHENSIVE LEDGER</button>
             </motion.div>
           )}
         </AnimatePresence>

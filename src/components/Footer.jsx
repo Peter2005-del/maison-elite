@@ -1,142 +1,121 @@
 import { Link } from 'react-router-dom';
-import { Instagram, Facebook, Twitter, Mail, ArrowUpRight, Globe, Languages, ShieldCheck, Sparkles, Smartphone } from 'lucide-react';
+import { Mail, Github, Instagram, Twitter, MapPin, Phone, Award, ShieldCheck, History, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const footerLinks = {
-  Atelier: [
-    { name: 'Latest Volumes', path: '/collections' },
-    { name: 'Bespoke Private Decree', path: '/collections' },
-    { name: 'High Archival Pieces', path: '/shop' },
-    { name: 'Identity Membership', path: '/login' },
+  enterprise: [
+    { name: 'Collections', path: '/collections' },
+    { name: 'Atelier Portfolio', path: '/portfolio' },
+    { name: 'Boutique Shop', path: '/shop' },
+    { name: 'Private Services', path: '/services' },
   ],
-  Experience: [
-    { name: 'Cross-Device Sync', path: '/profile' },
-    { name: 'Virtual Architecture', path: '/services' },
-    { name: 'Concierge Direct', path: '/contact' },
-    { name: 'House Chronology', path: '/about' },
+  support: [
+    { name: 'The Maison Story', path: '/about' },
+    { name: 'Contact Concierge', path: '/contact' },
+    { name: 'Shipping Policy', path: '#' },
+    { name: 'Terms of Service', path: '#' },
   ],
-  Boutiques: [
-    { name: 'Paris Saint-Honoré', path: '#' },
-    { name: 'New York Fifth Ave', path: '#' },
-    { name: 'Tokyo Ginza', path: '#' },
-    { name: 'London Mayfair', path: '#' },
-  ],
+  legal: [
+    { name: 'Privacy Protocol', path: '#' },
+    { name: 'Authentication', path: '#' },
+    { name: 'Sustainability', path: '#' },
+  ]
 };
-
-const socialLinks = [
-  { icon: Instagram, label: 'Instagram', url: '#' },
-  { icon: Facebook, label: 'Facebook', url: '#' },
-  { icon: Twitter, label: 'Twitter', url: '#' },
-  { icon: Mail, label: 'Email', url: 'mailto:atelier@maisonelite.com' },
-];
 
 export default function Footer() {
   return (
-    <footer className="bg-black border-t border-white/5 pt-32">
-      {/* Upper Footer - Newsletter */}
-      <div className="container-custom pb-32">
-        <div className="grid lg:grid-cols-2 gap-24 items-center">
-          <div>
-            <div className="flex items-center gap-4 mb-8">
-               <Sparkles className="text-[var(--accent-color)]" size={32} />
-               <span className="text-[var(--accent-color)] tracking-[0.6em] font-black uppercase text-[12px]">INNER CIRCLE</span>
-            </div>
-            <h3 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-white font-serif leading-none mb-8">THE <span className="gradient-text">ARCHIVE</span> LIST</h3>
-            <p className="text-white/40 text-lg font-light max-w-lg leading-relaxed">
-              Join our global heritage network for priority access to seasonal volumes and Indigo-tier private commissions.
-            </p>
-          </div>
-          <div className="relative group">
-            <div className="absolute -inset-4 bg-[var(--accent-color)]/5 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <div className="relative flex flex-col sm:flex-row gap-6">
-              <input 
-                type="email" 
-                placeholder="YOUR DIGITAL ADDRESS" 
-                className="flex-1 bg-white/5 border border-white/10 rounded-2xl px-8 py-6 text-white text-[11px] tracking-[0.4em] font-black uppercase focus:border-[var(--accent-color)] outline-none transition-all placeholder:text-white/20"
-              />
-              <button className="bg-white text-black px-12 py-6 rounded-2xl text-[11px] font-black tracking-[0.5em] hover:bg-[var(--accent-color)] hover:text-white transition-all shadow-2xl">SUBSCRIBE</button>
-            </div>
-            <div className="mt-6 flex items-center gap-3">
-               <ShieldCheck className="text-green-500/50" size={14} />
-               <span className="text-[9px] text-white/20 uppercase tracking-widest font-black">Encrypted via RSA Hybrid Cryptosystem</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Footer Links */}
-      <div className="container-custom py-32 border-y border-white/5">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-20">
-          {/* Brand Col */}
-          <div className="lg:col-span-2 space-y-12">
-            <Link to="/" className="group inline-block">
-               <span className="font-serif text-3xl tracking-[0.4em] text-[var(--accent-color)] uppercase block group-hover:scale-105 transition-transform duration-700">
-                  MAISON ÉLITE
-               </span>
-               <div className="h-0.5 w-full bg-gradient-to-r from-[var(--accent-color)] to-transparent mt-2" />
+    <footer className="bg-[var(--bg-secondary)] border-t border-[var(--border-color)] overflow-hidden">
+      <div className="container-custom pt-32 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 lg:gap-8 mb-24">
+          
+          {/* Brand Column */}
+          <div className="lg:col-span-5 space-y-10">
+            <Link to="/" className="flex items-center gap-4 group">
+               <div className="w-12 h-12 border-2 border-[var(--accent-color)] rounded-full flex items-center justify-center text-[var(--accent-color)] group-hover:bg-[var(--accent-color)] group-hover:text-white transition-all duration-500">
+                  <span className="font-serif text-2xl font-bold italic">M</span>
+               </div>
+               <span className="font-serif text-3xl tracking-[0.3em] pt-1 font-semibold">MAISON ÉLITE</span>
             </Link>
-            <p className="text-white/40 text-lg font-light leading-relaxed max-w-sm">
-              Defining the elite standard of architectural luxury. Every thread is a verified historical asset.
+            
+            <p className="text-[var(--text-secondary)] text-lg font-light leading-relaxed max-w-md">
+              A legacy of architectural luxury and heritage craftsmanship. We redefine the boundaries between couture, art, and modern lifestyle.
             </p>
+
             <div className="flex gap-6">
-               {socialLinks.map(({ icon: Icon, label, url }) => (
-                 <a 
-                   key={label}
-                   href={url}
-                   className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white/40 hover:text-[var(--accent-color)] hover:border-[var(--accent-color)] transition-all duration-500 hover:-translate-y-2 group shadow-xl"
-                   aria-label={label}
-                 >
-                   <Icon size={24} className="group-hover:rotate-12 transition-transform" />
+               {[Instagram, Twitter, Github].map((Icon, i) => (
+                 <a key={i} href="#" className="w-12 h-12 rounded-full border border-[var(--border-color)] flex items-center justify-center text-[var(--text-muted)] hover:border-[var(--accent-color)] hover:text-[var(--accent-color)] transition-all">
+                    <Icon size={20} />
                  </a>
                ))}
             </div>
-          </div>
-
-          {/* Links */}
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title} className="space-y-10">
-              <h4 className="text-[12px] font-black uppercase tracking-[0.6em] text-white">
-                {title}
-              </h4>
-              <ul className="space-y-6">
-                {links.map((link) => (
-                  <li key={link.name}>
-                    <Link 
-                      to={link.path} 
-                      className="text-white/30 hover:text-[var(--accent-color)] transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-3 group"
-                    >
-                      {link.name}
-                      <ArrowUpRight size={14} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            
+            <div className="bg-white p-8 rounded-3xl border border-[var(--border-color)] shadow-sm relative overflow-hidden group">
+               <div className="relative z-10">
+                  <h4 className="text-[10px] font-black tracking-[0.4em] uppercase text-[var(--text-muted)] mb-4">Newsletter Dispatch</h4>
+                  <div className="flex gap-4">
+                     <input type="email" placeholder="Concierge@client.com" className="flex-1 bg-[var(--bg-secondary)] border-none px-6 py-3 rounded-xl text-sm focus:ring-1 focus:ring-[var(--accent-color)] transition-all" />
+                     <button className="w-12 h-12 bg-[var(--accent-color)] text-white rounded-xl flex items-center justify-center hover:scale-105 transition-transform">
+                        <ArrowRight size={20} />
+                     </button>
+                  </div>
+               </div>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="bg-[#050505] py-12">
-        <div className="container-custom flex flex-col lg:flex-row justify-between items-center gap-10">
-          <div className="flex items-center gap-10 text-white/30 overflow-x-auto w-full lg:w-auto pb-4 lg:pb-0 no-scrollbar">
-             <div className="flex items-center gap-3 hover:text-white transition-colors cursor-pointer shrink-0">
-                <Globe size={16} /> <span className="text-[10px] font-black tracking-[0.4em] uppercase">GLOBAL NETWORK</span>
-             </div>
-             <div className="w-px h-6 bg-white/10 shrink-0" />
-             <div className="flex items-center gap-3 hover:text-white transition-colors cursor-pointer shrink-0">
-                <Smartphone size={16} /> <span className="text-[10px] font-black tracking-[0.4em] uppercase">DEVICE SYNC ACTIVE</span>
-             </div>
           </div>
 
-          <p className="text-white/20 text-[10px] uppercase font-black tracking-[0.6em] text-center lg:text-left order-3 lg:order-2">
-            © {new Date().getFullYear()} MAISON ÉLITE ATELIER. ALL RIGHTS INDEXED.
-          </p>
+          {/* Links Columns */}
+          <div className="lg:col-span-2 space-y-8">
+            <h4 className="text-[10px] font-black tracking-[0.4em] uppercase text-[var(--text-muted)]">Enterprise</h4>
+            <ul className="space-y-4">
+              {footerLinks.enterprise.map(link => (
+                <li key={link.name}>
+                  <Link to={link.path} className="text-sm font-bold uppercase tracking-widest text-[var(--text-secondary)] hover:text-[var(--accent-color)] transition-colors">{link.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          <div className="flex flex-wrap justify-center gap-10 order-2 lg:order-3">
-             {['Privacy', 'Legal', 'Ledger'].map(item => (
-                <a key={item} href="#" className="text-[10px] font-black uppercase tracking-[0.5em] text-white/30 hover:text-[var(--accent-color)] transition-colors">
-                  {item}
-                </a>
+          <div className="lg:col-span-2 space-y-8">
+            <h4 className="text-[10px] font-black tracking-[0.4em] uppercase text-[var(--text-muted)]">House</h4>
+            <ul className="space-y-4">
+              {footerLinks.support.map(link => (
+                <li key={link.name}>
+                  <Link to={link.path} className="text-sm font-bold uppercase tracking-widest text-[var(--text-secondary)] hover:text-[var(--accent-color)] transition-colors">{link.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-3 space-y-10">
+             <div className="bg-[var(--accent-color)] text-white p-8 rounded-[2.5rem] shadow-xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-6 opacity-20 rotate-[-15deg]">
+                   <Award size={100} />
+                </div>
+                <div className="relative z-10">
+                   <h4 className="text-[10px] font-black tracking-[0.4em] uppercase mb-4 opacity-70">Contact Office</h4>
+                   <p className="text-xl font-bold mb-6">30 Avenue Montaigne, Paris</p>
+                   <div className="flex items-center gap-3 text-xs font-bold tracking-widest uppercase">
+                      <Phone size={14} /> +33 1 44 11 00 00
+                   </div>
+                </div>
+             </div>
+             
+             <div className="flex flex-wrap gap-4 opacity-40 grayscale group-hover:grayscale-0 transition-all">
+                <ShieldCheck size={24} />
+                <History size={24} />
+                <Award size={24} />
+                <MapPin size={24} />
+             </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="pt-12 border-t border-[var(--border-color)] flex flex-col md:flex-row justify-between items-center gap-8">
+          <p className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-[0.5em]">
+            © {new Date().getFullYear()} MAISON ÉLITE ATELIER. ALL RIGHTS RESERVED.
+          </p>
+          <div className="flex gap-10">
+             {['TERMS', 'PRIVACY', 'COOKIES'].map(item => (
+               <a key={item} href="#" className="text-[10px] font-black tracking-widest text-[var(--text-muted)] hover:text-[var(--accent-color)] transition-colors">{item}</a>
              ))}
           </div>
         </div>

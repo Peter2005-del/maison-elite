@@ -1,70 +1,47 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, CreditCard, Truck, ShieldCheck, ArrowRight, ArrowLeft, Sparkles, Coins, Wallet, Copy, Smartphone, ShoppingBag } from 'lucide-react';
+import { Check, CreditCard, Truck, ShieldCheck, ArrowRight, ArrowLeft, Heart, ShoppingBag, Shield } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Checkout() {
   const { cartItems, cartTotal, clearCart } = useCart();
-  const { formatPrice, currency } = useCurrency();
+  const { formatPrice } = useCurrency();
   const [step, setStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [copied, setCopied] = useState(false);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    address: '',
-    city: '',
-    zip: '',
-    country: '',
-    cardName: '',
-    cardNumber: '',
-    expiry: '',
-    cvc: ''
+    firstName: '', lastName: '', email: '',
+    address: '', city: '', zip: '', country: '',
+    cardName: '', cardNumber: '', expiry: '', cvc: ''
   });
-
-  const walletAddresses = {
-    BTC: 'bc1qlax6px0p6h5v4t0e7e4r5n5x9p7u8w9y6a2j3q',
-    ETH: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
-    USDT: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
-  };
-
-  const currentWallet = walletAddresses[currency.code] || walletAddresses.ETH;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(currentWallet);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   const handleCreateOrder = () => {
     setIsProcessing(true);
-    // Simulate API call
+    // Simulate payment processing
     setTimeout(() => {
       setIsProcessing(false);
       setIsSuccess(true);
       clearCart();
-    }, 2500);
+    }, 3000);
   };
 
   if (cartItems.length === 0 && !isSuccess) {
     return (
       <div className="min-h-screen pt-40 pb-20 flex flex-col items-center justify-center text-center px-4 bg-[var(--bg-primary)]">
-        <div className="w-24 h-24 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-full flex items-center justify-center mb-8">
-          <ShoppingBag className="text-[var(--text-muted)] opacity-40" size={40} />
+        <div className="w-24 h-24 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-full flex items-center justify-center mb-10">
+          <ShoppingBag className="text-[var(--text-muted)]" size={40} />
         </div>
-        <h2 className="text-3xl font-black uppercase tracking-tighter mb-4">MERCANTILE BAG EMPTY</h2>
-        <p className="text-[var(--text-muted)] text-[10px] font-black uppercase tracking-[0.3em] mb-10">Select articles from the boutique to proceed</p>
-        <Link to="/shop" className="btn-primary h-14 px-10 flex items-center">RETURN TO BOUTIQUE</Link>
+        <h2 className="text-4xl font-serif uppercase tracking-widest mb-6">Your bag is empty</h2>
+        <p className="text-[var(--text-secondary)] mb-12 max-w-sm">Continue exploring our archival collections to find your relative masterpiece.</p>
+        <Link to="/shop" className="btn-primary">RETURN TO BOUTIQUE</Link>
       </div>
     );
   }
@@ -73,18 +50,18 @@ export default function Checkout() {
     return (
       <div className="min-h-screen pt-40 pb-20 flex flex-col items-center justify-center text-center px-4 bg-[var(--bg-primary)]">
         <motion.div 
-          initial={{ scale: 0, rotate: -45 }} 
-          animate={{ scale: 1, rotate: 0 }} 
-          className="w-32 h-32 bg-green-500/10 border-2 border-green-500/20 rounded-full flex items-center justify-center mb-10 shadow-2xl"
+          initial={{ scale: 0 }} 
+          animate={{ scale: 1 }} 
+          className="w-32 h-32 bg-green-500/10 border-2 border-green-500/20 rounded-full flex items-center justify-center mb-12 shadow-[0_20px_50px_rgba(34,197,94,0.2)]"
         >
-          <Check size={64} className="text-green-500" />
+          <Check size={60} className="text-green-600" />
         </motion.div>
-        <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6 leading-none">ORDER <span className="gradient-text">CONFIRMED</span></h1>
-        <p className="text-[var(--text-secondary)] max-w-md mb-12 text-lg font-medium tracking-tight">
-          Your commission has been filed. A confirmation has been dispatched to <span className="text-[var(--accent-color)] font-bold">{formData.email}</span>.
+        <h1 className="text-6xl font-serif uppercase tracking-tighter mb-8 italic">THANK YOU.</h1>
+        <p className="text-xl text-[var(--text-secondary)] max-w-md mb-16 leading-relaxed">
+          Your acquisition is being prepared. A confirmation session has been dispatched to <span className="text-[var(--accent-color)] font-bold">{formData.email}</span>.
         </p>
-        <button onClick={() => navigate('/shop')} className="btn-primary h-14 px-12 uppercase tracking-widest">
-          RETURN TO SHOP
+        <button onClick={() => navigate('/shop')} className="btn-primary px-16">
+          CONTINUE SHOPPING
         </button>
       </div>
     );
@@ -92,348 +69,207 @@ export default function Checkout() {
 
   return (
     <div className="min-h-screen pt-40 pb-20 px-4 bg-[var(--bg-primary)]">
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 md:gap-20">
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-16">
         
-        {/* Left Column: Form Steps */}
-        <div className="lg:col-span-12 xl:col-span-8 space-y-12">
-          {/* Progress Indicators */}
-          <div className="flex items-center justify-between mb-12 bg-black py-8 px-10 rounded-3xl border border-[var(--border-color)]">
-            {['LOGISTICS', 'PAYMENT', 'AUTHORIZATION'].map((label, idx) => (
-              <div key={label} className="flex gap-4 items-center">
-                <div className={`
-                  w-12 h-12 rounded-2xl flex items-center justify-center font-black text-sm transition-all duration-500
-                  ${step > idx + 1 ? 'bg-green-500 text-white shadow-lg rotate-12' : 
-                    step === idx + 1 ? 'bg-[var(--accent-color)] text-white shadow-xl scale-110 -rotate-3' : 'bg-white/5 text-[var(--text-muted)] border border-white/10'}
-                `}>
-                  {step > idx + 1 ? <Check size={20} /> : idx + 1}
-                </div>
-                <span className={`text-[11px] font-black uppercase tracking-[0.3em] hidden sm:block ${step === idx + 1 ? 'text-white' : 'text-[var(--text-muted)]'}`}>
-                  {label}
-                </span>
-                {idx < 2 && <div className="w-12 h-[1px] bg-white/10 mx-6 hidden lg:block" />}
-              </div>
-            ))}
-          </div>
+        {/* Progress Bar Container */}
+        <div className="lg:col-span-12">
+            <div className="flex items-center justify-between max-w-4xl mx-auto mb-20 relative">
+               <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-[var(--border-color)] -z-10" />
+               <div className="absolute top-1/2 left-0 h-[1.5px] bg-[var(--accent-color)] transition-all duration-700 -z-10" style={{ width: step === 1 ? '0%' : '100%' }} />
+               
+               {[1, 2].map((i) => (
+                 <div key={i} className="flex flex-col items-center gap-4 bg-[var(--bg-primary)] px-6">
+                    <div className={`w-14 h-14 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${step >= i ? 'bg-[var(--accent-color)] border-[var(--accent-color)] text-white shadow-xl' : 'bg-white border-[var(--border-color)] text-[var(--text-muted)]'}`}>
+                       {step > i ? <Check size={20} /> : <span className="font-bold">{i}</span>}
+                    </div>
+                    <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${step >= i ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'}`}>
+                       {i === 1 ? 'SHIPPING' : 'PAYMENT'}
+                    </span>
+                 </div>
+               ))}
+            </div>
+        </div>
 
-          <div className="bg-[var(--bg-card)] p-10 md:p-16 rounded-[4rem] border border-[var(--border-color)] shadow-3xl relative overflow-hidden transition-all hover:border-[var(--accent-color)]/20">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--accent-color)]/5 rounded-bl-full pointer-events-none blur-3xl" />
-            
-            <AnimatePresence mode="wait">
-              {step === 1 && (
+        {/* Left Column: Form */}
+        <div className="lg:col-span-12 xl:col-span-8">
+           <AnimatePresence mode="wait">
+              {step === 1 ? (
                 <motion.div
-                  key="step1"
-                  initial={{ opacity: 0, x: -30 }}
+                  key="shipping"
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 30 }}
-                  className="space-y-10"
+                  exit={{ opacity: 0, x: 20 }}
+                  className="space-y-12 bg-white border border-[var(--border-color)] p-12 md:p-16 rounded-[2.5rem] shadow-sm"
                 >
                   <div className="flex items-center gap-6 mb-4">
-                    <div className="w-16 h-16 bg-[var(--accent-color)]/10 rounded-2xl flex items-center justify-center text-[var(--accent-color)] border border-[var(--accent-color)]/20">
-                      <Truck size={32} />
+                     <div className="w-14 h-14 bg-[var(--bg-secondary)] rounded-2xl flex items-center justify-center text-[var(--accent-color)] border border-[var(--border-color)]">
+                        <Truck size={28} />
+                     </div>
+                     <h2 className="text-3xl font-serif uppercase tracking-tight">Shipping Logistics</h2>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] ml-1">First Name</label>
+                       <input name="firstName" value={formData.firstName} onChange={handleChange} className="form-input" placeholder="Enter first name" />
                     </div>
-                    <div>
-                      <h2 className="text-3xl font-black uppercase tracking-tighter text-white font-serif">Delivery Logistics</h2>
-                      <p className="text-[10px] text-[var(--text-muted)] uppercase tracking-[0.3em] mt-1">Global Ivory & Gold Courier Network</p>
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] ml-1">Last Name</label>
+                       <input name="lastName" value={formData.lastName} onChange={handleChange} className="form-input" placeholder="Enter last name" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] ml-1">Email Address</label>
+                     <input name="email" value={formData.email} onChange={handleChange} className="form-input" placeholder="Enter email" type="email" />
+                  </div>
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] ml-1">Street Address</label>
+                     <input name="address" value={formData.address} onChange={handleChange} className="form-input" placeholder="Enter shipping address" />
+                  </div>
+                  <div className="grid md:grid-cols-3 gap-8">
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] ml-1">City</label>
+                       <input name="city" value={formData.city} onChange={handleChange} className="form-input" />
+                    </div>
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] ml-1">Postal Code</label>
+                       <input name="zip" value={formData.zip} onChange={handleChange} className="form-input" />
+                    </div>
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] ml-1">Country</label>
+                       <input name="country" value={formData.country} onChange={handleChange} className="form-input" placeholder="United States" />
                     </div>
                   </div>
                   
-                  <div className="grid md:grid-cols-2 gap-10">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-1 block">Legal First Name</label>
-                      <input name="firstName" value={formData.firstName} onChange={handleChange} className="form-input text-lg py-5" placeholder="ELENA" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-1 block">Legal Last Name</label>
-                      <input name="lastName" value={formData.lastName} onChange={handleChange} className="form-input text-lg py-5" placeholder="MOREAU" />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-1 block">Communication Cipher (Email)</label>
-                    <input name="email" value={formData.email} onChange={handleChange} className="form-input text-lg py-5" placeholder="ATELIER@MAISONELITE.COM" type="email" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-1 block">Physical Coordinate (Address)</label>
-                    <input name="address" value={formData.address} onChange={handleChange} className="form-input text-lg py-5" placeholder="AVENUE MONTAIGNE, 30" />
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-10">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-1 block">City Atoll</label>
-                      <input name="city" value={formData.city} onChange={handleChange} className="form-input text-lg py-5" placeholder="PARIS" />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-1 block">Postal Vector</label>
-                      <input name="zip" value={formData.zip} onChange={handleChange} className="form-input text-lg py-5" placeholder="75008" />
-                    </div>
-                  </div>
-                  <button onClick={() => setStep(2)} className="w-full btn-primary h-20 text-[11px] font-black tracking-[0.5em] rounded-3xl mt-12 flex justify-center items-center gap-4 group">
-                    CONTINUE TO VALUATION <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
+                  <button onClick={() => setStep(2)} className="w-full btn-primary h-16 mt-10 rounded-2xl">
+                    CONTINUE TO PAYMENT <ArrowRight size={18} />
                   </button>
                 </motion.div>
-              )}
-
-              {step === 2 && (
+              ) : (
                 <motion.div
-                  key="step2"
-                  initial={{ opacity: 0, x: -30 }}
+                  key="payment"
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 30 }}
-                  className="space-y-12"
+                  exit={{ opacity: 0, x: 20 }}
+                  className="space-y-12 bg-white border border-[var(--border-color)] p-12 md:p-16 rounded-[2.5rem] shadow-sm text-center"
                 >
-                  <div className="flex items-center gap-6 mb-4">
-                    <div className="w-16 h-16 bg-[var(--accent-color)]/10 rounded-2xl flex items-center justify-center text-[var(--accent-color)] border border-[var(--accent-color)]/20">
-                      {currency.code === 'USD' ? <CreditCard size={32} /> : <Coins size={32} />}
-                    </div>
-                    <div>
-                      <h2 className="text-3xl font-black uppercase tracking-tighter text-white font-serif">{currency.code === 'USD' ? 'Heritage Assets' : 'Digital Liquidity'}</h2>
-                      <p className="text-[10px] text-[var(--text-muted)] uppercase tracking-[0.3em] mt-1">Secure {currency.code} Settlement Portal</p>
-                    </div>
-                  </div>
-                  
-                  {currency.code === 'USD' ? (
-                    <div className="space-y-10">
-                      {/* Credit Card Flow */}
-                      <div className="bg-gradient-to-br from-[#121212] to-[#050505] text-white p-10 rounded-[2.5rem] shadow-3xl border border-white/5 relative overflow-hidden aspect-[1.58/1] max-w-lg mx-auto">
-                        <div className="absolute top-0 right-0 p-16 opacity-[0.05] pointer-events-none">
-                            <Sparkles size={300} />
-                        </div>
-                        <div className="relative z-10 h-full flex flex-col justify-between">
-                            <div className="flex justify-between items-start">
-                                <div className="bg-gradient-to-r from-[var(--accent-color)] to-[#ffeaac] w-16 h-11 rounded-xl flex items-center justify-center shadow-lg relative overflow-hidden">
-                                    <div className="absolute inset-x-0 top-1/2 h-px bg-black/30" />
-                                    <div className="absolute inset-y-0 left-1/2 w-px bg-black/30" />
-                                </div>
-                                <span className="font-black text-[11px] uppercase tracking-[0.5em] text-[var(--accent-color)]">MAISON PRIVÉ</span>
-                            </div>
-                            
-                            <div className="text-2xl md:text-3xl tracking-[0.3em] font-medium text-white/90">
-                            {formData.cardNumber || '•••• •••• •••• ••••'}
-                            </div>
-                            
-                            <div className="flex justify-between items-end">
-                                <div>
-                                    <div className="text-[8px] font-black uppercase opacity-40 mb-2 tracking-widest">ASSET HOLDER</div>
-                                    <div className="font-black text-xs uppercase tracking-[0.3em] text-white">{formData.cardName || 'ELENA MOREAU'}</div>
-                                </div>
-                                <div className="text-right">
-                                    <div className="text-[8px] font-black uppercase opacity-40 mb-2 tracking-widest">VALID THRU</div>
-                                    <div className="font-black text-xs tracking-widest text-white">{formData.expiry || 'MM/YY'}</div>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
-
-                      <div className="grid gap-8">
-                        <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-1 block">Card Ledger Number</label>
-                        <input name="cardNumber" maxLength="19" value={formData.cardNumber} onChange={handleChange} className="form-input text-lg py-5" placeholder="XXXX XXXX XXXX XXXX" />
-                        </div>
-                        <div className="space-y-2">
-                        <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-1 block">Authorized Holder Name</label>
-                        <input name="cardName" value={formData.cardName} onChange={handleChange} className="form-input text-lg py-5" placeholder="ELENA MOREAU" />
-                        </div>
-                        <div className="grid grid-cols-2 gap-8">
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-1 block">Cessation Date</label>
-                            <input name="expiry" value={formData.expiry} onChange={handleChange} className="form-input text-lg py-5" placeholder="MM / YY" />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-1 block">Secure Key (CVC)</label>
-                            <input name="cvc" value={formData.cvc} onChange={handleChange} className="form-input text-lg py-5" placeholder="XXX" />
-                        </div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-10">
-                      {/* Crypto Flow */}
-                      <div className="bg-[var(--bg-secondary)] p-10 rounded-[2.5rem] border border-[var(--border-color)] space-y-8">
-                         <div className="flex flex-col items-center text-center space-y-6">
-                            <div className="w-40 h-40 bg-white p-4 rounded-3xl shadow-2xl">
-                               {/* Dummy QR Code */}
-                               <div className="w-full h-full bg-black flex items-center justify-center rounded-xl overflow-hidden relative">
-                                  <div className="grid grid-cols-4 grid-rows-4 gap-1 w-full h-full opacity-80 p-2">
-                                     {[...Array(16)].map((_, i) => (
-                                       <div key={i} className={`bg-white/90 ${Math.random() > 0.5 ? 'opacity-100' : 'opacity-20'}`} />
-                                     ))}
-                                  </div>
-                                  <div className="absolute inset-0 flex items-center justify-center">
-                                      <div className="bg-black p-2 rounded-lg border border-white/20">
-                                         {currency.code === 'BTC' ? <span className="text-orange-500 font-bold">₿</span> : currency.code === 'ETH' ? <span className="text-blue-400 font-bold">Ξ</span> : <span className="text-green-400 font-bold">₮</span>}
-                                      </div>
-                                  </div>
-                               </div>
-                            </div>
-                            <div>
-                               <h4 className="text-xl font-black uppercase tracking-widest text-white mb-2">Scan to Settle in {currency.code}</h4>
-                               <p className="text-[11px] text-[var(--text-muted)] font-black uppercase tracking-[0.3em]">Total Amount: {formatPrice(cartTotal)}</p>
-                            </div>
-                         </div>
-
-                         <div className="space-y-3">
-                            <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)] ml-1 block">Official {currency.code} Destination Address</label>
-                            <div className="flex gap-4">
-                               <div className="flex-1 bg-black border border-white/10 p-5 rounded-2xl text-[12px] font-mono text-[var(--accent-color)] break-all flex items-center truncate">
-                                  {currentWallet}
-                               </div>
-                               <button 
-                                onClick={handleCopy}
-                                className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${copied ? 'bg-green-500 text-white' : 'bg-white/5 text-white hover:bg-[var(--accent-color)] hover:text-white border border-white/10'}`}
-                               >
-                                  {copied ? <Check size={20} /> : <Copy size={20} />}
-                                </button>
-                            </div>
-                         </div>
-
-                         <div className="bg-yellow-500/10 border border-yellow-500/20 p-6 rounded-2xl flex items-start gap-4">
-                            <ShieldCheck className="text-yellow-500 shrink-0" size={20} />
-                            <p className="text-[10px] text-yellow-500/80 font-black uppercase tracking-widest leading-relaxed">
-                              Send only {currency.code} to this address. Sending other assets will result in permanent loss of capital.
-                            </p>
-                         </div>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex flex-col sm:flex-row gap-6 mt-12">
-                    <button onClick={() => setStep(1)} className="flex-1 btn-outline h-20 rounded-3xl flex justify-center items-center gap-4 text-[11px] font-black tracking-[0.3em]">
-                      <ArrowLeft size={20} /> LOGISTICS
-                    </button>
-                    <button onClick={() => setStep(3)} className="flex-[2] btn-primary h-20 rounded-3xl flex justify-center items-center gap-4 text-[11px] font-black tracking-[0.5em] shadow-2xl">
-                      REVIEW COMMISSION <ArrowRight size={20} />
-                    </button>
-                  </div>
-                </motion.div>
-              )}
-
-              {step === 3 && (
-                <motion.div
-                  key="step3"
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 30 }}
-                  className="space-y-12"
-                >
-                  <div className="flex items-center gap-6 mb-4">
-                    <div className="w-16 h-16 bg-[var(--accent-color)]/10 rounded-2xl flex items-center justify-center text-[var(--accent-color)] border border-[var(--accent-color)]/20">
-                      <ShieldCheck size={32} />
-                    </div>
-                    <div>
-                      <h2 className="text-3xl font-black uppercase tracking-tighter text-white font-serif">Final Authorization</h2>
-                      <p className="text-[10px] text-[var(--text-muted)] uppercase tracking-[0.3em] mt-1">Irretrievable Digital Signature Pending</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-8 bg-black/40 p-10 rounded-[2.5rem] border border-[var(--border-color)]">
-                     <div className="flex justify-between items-start">
-                       <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[var(--text-muted)]">DELIVERY VECTOR</span>
-                       <div className="text-right">
-                          <p className="text-sm font-black text-white uppercase tracking-widest mb-1">{formData.firstName} {formData.lastName}</p>
-                          <p className="text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-tight">{formData.address}</p>
-                          <p className="text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-tight">{formData.city}, {formData.zip}</p>
-                       </div>
+                  <div className="flex items-center gap-6 mb-12 text-left">
+                     <div className="w-14 h-14 bg-[var(--bg-secondary)] rounded-2xl flex items-center justify-center text-[var(--accent-color)] border border-[var(--border-color)]">
+                        <CreditCard size={28} />
                      </div>
-                     <div className="h-px bg-white/5 w-full" />
-                     <div className="flex justify-between items-center">
-                       <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[var(--text-muted)]">LIQUIDITY METHOD</span>
-                       <div className="flex items-center gap-3">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${currency.code === 'USD' ? 'bg-green-500/20 text-green-500' : 'bg-[var(--accent-color)]/20 text-[var(--accent-color)]'}`}>
-                             {currency.code === 'USD' ? '$' : currency.symbol}
-                          </div>
-                          <p className="text-sm font-black text-white uppercase tracking-widest">
-                            {currency.code === 'USD' ? `ENDING IN •••• ${formData.cardNumber.slice(-4) || 'XXXX'}` : `${currency.code} NETWORK`}
-                          </p>
-                       </div>
+                     <h2 className="text-3xl font-serif uppercase tracking-tight">Payment Verification</h2>
+                  </div>
+
+                  {/* Credit Card UI */}
+                  <div className="bg-gradient-to-br from-[#1e293b] to-[#0f172a] text-white p-10 rounded-[2rem] aspect-[1.6/1] max-w-md mx-auto relative overflow-hidden shadow-2xl">
+                     <div className="absolute top-0 right-0 p-10 opacity-10"><Shield size={180} /></div>
+                     <div className="h-full flex flex-col justify-between relative z-10 text-left">
+                        <p className="text-[10px] font-black tracking-[0.4em] text-white/40">PREMIUM CREDIT</p>
+                        <p className="text-2xl font-bold tracking-[0.3em] font-mono">{formData.cardNumber || '•••• •••• •••• ••••'}</p>
+                        <div className="flex justify-between items-end">
+                           <p className="text-xs font-black uppercase tracking-widest">{formData.cardName || 'YOUR NAME'}</p>
+                           <p className="text-xs font-black tracking-widest">{formData.expiry || 'MM/YY'}</p>
+                        </div>
                      </div>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-6 mt-12">
-                    <button onClick={() => setStep(2)} className="flex-1 btn-outline h-20 rounded-3xl flex justify-center items-center gap-4 text-[11px] font-black tracking-[0.3em]">
-                      <ArrowLeft size={20} /> ADJUST ASSETS
+                  <div className="space-y-8 mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                    <div className="md:col-span-2 space-y-2">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] ml-1">Cardholder Name</label>
+                       <input name="cardName" value={formData.cardName} onChange={handleChange} className="form-input" placeholder="Name on card" />
+                    </div>
+                    <div className="md:col-span-2 space-y-2">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] ml-1">Card Number</label>
+                       <input name="cardNumber" maxLength="19" value={formData.cardNumber} onChange={handleChange} className="form-input" placeholder="0000 0000 0000 0000" />
+                    </div>
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] ml-1">Expiry Date</label>
+                       <input name="expiry" value={formData.expiry} onChange={handleChange} className="form-input" placeholder="MM/YY" />
+                    </div>
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] ml-1">CVC Code</label>
+                       <input name="cvc" value={formData.cvc} onChange={handleChange} className="form-input" placeholder="123" />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-4 mt-12">
+                    <button onClick={() => setStep(1)} className="flex-1 btn-outline h-16 rounded-2xl">
+                      <ArrowLeft size={18} /> BACK
                     </button>
                     <button 
                       onClick={handleCreateOrder} 
                       disabled={isProcessing}
-                      className="flex-[2] btn-primary h-20 rounded-3xl shadow-[0_20px_50px_rgba(201,162,39,0.3)] flex justify-center items-center gap-4 text-[11px] font-black tracking-[0.5em]"
+                      className="flex-[2] btn-primary h-16 rounded-2xl relative overflow-hidden"
                     >
                       {isProcessing ? (
-                        <>
-                           <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                           VERIFYING SIGNATURE...
-                        </>
+                        <div className="flex items-center gap-3"><RefreshCcw className="animate-spin" size={20} /> AUTHORIZING...</div>
                       ) : (
-                        <>AUTHORIZE {formatPrice(cartTotal)} <ArrowRight size={20} /></>
+                        <>COMPLETE ACQUISITION - {formatPrice(cartTotal)}</>
                       )}
                     </button>
                   </div>
+                  
+                  <div className="pt-8 flex items-center justify-center gap-3 text-green-600">
+                     <ShieldCheck size={18} />
+                     <p className="text-[9px] font-black uppercase tracking-widest">Secured via end-to-end RSA encryption protocols</p>
+                  </div>
                 </motion.div>
               )}
-            </AnimatePresence>
-          </div>
+           </AnimatePresence>
         </div>
 
-        {/* Right Column: Ledger Summary */}
+        {/* Right Column: Order Summary */}
         <div className="lg:col-span-12 xl:col-span-4">
-           <div className="bg-[var(--bg-card)] p-12 rounded-[3.5rem] border border-[var(--border-color)] shadow-3xl sticky top-40 overflow-hidden group hover:border-[var(--accent-color)]/30 transition-all">
-              <div className="absolute top-0 left-0 w-2 h-full bg-[var(--accent-color)] opacity-20 group-hover:opacity-100 transition-opacity" />
-              <div className="flex items-center gap-4 mb-10">
-                 <div className="w-10 h-10 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center border border-[var(--border-color)]">
-                    <Wallet size={18} className="text-[var(--accent-color)]" />
-                 </div>
-                 <h3 className="text-xl font-black uppercase tracking-widest text-white font-serif">LEDGER</h3>
-              </div>
-
-              <div className="space-y-8 mb-12 max-h-[350px] overflow-y-auto custom-scrollbar pr-4">
-                {cartItems.map(item => (
-                  <div key={item.id} className="flex gap-6 items-center">
-                    <div className="w-16 h-20 rounded-xl overflow-hidden shrink-0 border border-[var(--border-color)]">
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between gap-4 mb-2">
-                         <h4 className="font-black text-[11px] uppercase tracking-widest text-white truncate">{item.name}</h4>
-                         <span className="text-[11px] font-black tracking-widest text-[var(--accent-color)] whitespace-nowrap">{formatPrice(item.price * item.quantity)}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <p className="text-[9px] text-[var(--text-muted)] font-black uppercase tracking-widest">{item.category}</p>
-                        <p className="text-[10px] font-black text-white/50 bg-white/5 px-2 py-0.5 rounded-md">× {item.quantity}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+           <div className="bg-[var(--bg-secondary)] p-12 rounded-[2.5rem] border border-[var(--border-color)] sticky top-40">
+              <h3 className="text-xl font-serif uppercase tracking-widest mb-10 border-b border-[var(--border-color)] pb-6">Summary</h3>
               
-              <div className="space-y-5 pt-10 border-t border-white/5">
-                <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)]">
-                  <span>GROSS VALUE</span>
-                  <span className="text-white">{formatPrice(cartTotal)}</span>
-                </div>
-                <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-[0.4em] text-[var(--text-muted)]">
-                  <span>LOGISTICS FEE</span>
-                  <span className="text-[var(--accent-color)]">FREE</span>
-                </div>
-                <div className="flex justify-between items-center pt-8 border-t border-white/5">
-                  <span className="text-xs font-black uppercase tracking-[0.5em] text-white">NET TOTAL</span>
-                  <div className="text-right">
-                    <span className="text-3xl font-black tracking-tighter text-[var(--accent-color)] leading-none block">{formatPrice(cartTotal)}</span>
-                    {currency.code !== 'USD' && (
-                       <span className="text-[10px] text-[var(--text-muted)] font-black uppercase tracking-widest mt-2 block">≈ ${cartTotal.toLocaleString()} USD</span>
-                    )}
-                  </div>
-                </div>
+              <div className="space-y-6 max-h-[300px] overflow-y-auto custom-scrollbar pr-2">
+                 {cartItems.map(item => (
+                    <div key={item.id} className="flex gap-4 items-center">
+                       <div className="w-16 h-20 rounded-xl overflow-hidden bg-white border border-[var(--border-color)] shrink-0">
+                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                       </div>
+                       <div className="flex-1">
+                          <h4 className="text-[10px] font-black uppercase tracking-widest truncate">{item.name}</h4>
+                          <p className="text-xs font-bold text-[var(--accent-color)] mt-1">{formatPrice(item.price)}</p>
+                          <p className="text-[9px] text-[var(--text-muted)] mt-1 uppercase">QTY: {item.quantity}</p>
+                       </div>
+                    </div>
+                 ))}
               </div>
 
-              <div className="mt-12 p-6 bg-black rounded-3xl border border-white/10 flex items-center gap-4">
-                 <div className="w-10 h-10 bg-[var(--accent-color)]/10 rounded-full flex items-center justify-center border border-[var(--accent-color)]/20 shadow-lg shadow-[var(--accent-color)]/5">
-                    <Smartphone size={18} className="text-[var(--accent-color)]" />
+              <div className="mt-10 pt-10 border-t border-[var(--border-color)] space-y-4">
+                 <div className="flex justify-between text-xs font-semibold text-[var(--text-secondary)]">
+                    <span>Subtotal</span>
+                    <span>{formatPrice(cartTotal)}</span>
                  </div>
-                 <div className="flex-1">
-                    <p className="text-[9px] font-black uppercase tracking-widest text-white">Device Synced</p>
-                    <p className="text-[8px] font-medium text-[var(--text-muted)] uppercase tracking-tighter">Your session is secure & portable</p>
+                 <div className="flex justify-between text-xs font-semibold text-[var(--text-secondary)]">
+                    <span>Shipping</span>
+                    <span>$0.00</span>
                  </div>
+                 <div className="h-px bg-[var(--border-color)] my-4" />
+                 <div className="flex justify-between items-end">
+                    <span className="text-sm font-black uppercase tracking-widest">Total</span>
+                    <span className="text-3xl font-black text-[var(--accent-color)]">{formatPrice(cartTotal)}</span>
+                 </div>
+              </div>
+
+              <div className="mt-12 bg-white/50 p-6 rounded-2xl border border-[var(--border-color)] flex items-center gap-4">
+                 <Heart className="text-[var(--accent-color)]" size={20} />
+                 <p className="text-[9px] font-medium text-[var(--text-muted)] uppercase leading-relaxed font-black tracking-widest">
+                    Your acquisition supports sustainable artisan heritage across 12 countries.
+                 </p>
               </div>
            </div>
         </div>
       </div>
     </div>
   );
+}
+
+// Support Icons
+function RefreshCcw(props) {
+  return (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-refresh-ccw"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+  )
 }

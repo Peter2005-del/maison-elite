@@ -1,74 +1,54 @@
 @import "tailwindcss";
 
 /* ========================================
-   MAISON ÉLITE - Luxury Ivory & Gold Design
+   MAISON ÉLITE - Architectural Monolith
    ======================================== */
 
 @theme {
-  /* Color Palette */
-  --color-main-black: #000000;
-  --color-accent-indigo: #6366f1;
-  --color-bg-white: #ffffff;
-  --color-text-slate: #94a3b8;
-
-  /* Modern High-Performance Typography */
-  --font-serif: "Playfair Display", serif;
+  --hue-neutral: 0;
+  --sat-neutral: 0%;
+  
+  --color-deep-black: hsl(0, 0%, 4%);
+  --color-obsidian: hsl(0, 0%, 7%);
+  --color-stone: hsl(0, 0%, 15%);
+  --color-ivory: hsl(0, 0%, 98%);
+  
+  /* Perfomed Typography */
+  --font-serif: "Cormorant Garamond", serif;
   --font-sans: "Outfit", -apple-system, sans-serif;
-  --font-mono: "Outfit", monospace;
+  --font-mono: "Fira Code", monospace;
 
-  /* Gradients */
-  --background-image-indigo-gradient: linear-gradient(
-    135deg,
-    #6366f1 0%,
-    #a855f7 50%,
-    #6366f1 100%
-  );
+  /* Stealth Accents */
+  --color-accent: hsl(46, 60%, 45%); /* Muted Champagne Gold */
 }
 
 @layer base {
   :root {
-    /* Dark Mode (Default) - Midnight Electric */
-    --bg-primary: #000000;
-    --bg-secondary: #0a0a0a;
-    --bg-card: #111111;
-    --bg-hover: #1a1a1a;
+    /* UNIFIED STEALTH THEME - "The Private Archive" */
+    /* Focus: Understated luxury that doesn't scream for attention. */
+    
+    --bg-primary: #050505;    /* Pure Void */
+    --bg-secondary: #0A0A0A;  /* Deep Obsidian */
+    --bg-card: #0F0F0F;       /* Stone Core */
+    --bg-hover: #151515;
 
-    --text-primary: #ffffff;
-    --text-secondary: #94a3b8;
-    --text-muted: #475569;
+    --text-primary: #FFFFFF;
+    --text-secondary: #999999;
+    --text-muted: #444444;
 
-    --accent-color: #6366f1;
-    --accent-contrast: #ffffff;
+    --accent-color: #C5A227;  /* Subtle Heritage Gold */
+    --accent-contrast: #000000;
 
-    --border-color: #1e293b;
+    --border-color: rgba(255, 255, 255, 0.06);
+    --header-bg: rgba(5, 5, 5, 0.9);
 
-    --header-bg: rgba(0, 0, 0, 0.85);
-
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.8);
-    --shadow-md: 0 20px 60px rgba(0, 0, 0, 0.9);
-  }
-
-  /* Light Mode - Pure Minimalist */
-  [data-theme="light"],
-  .light {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
-    --bg-card: #ffffff;
-    --bg-hover: #f1f5f9;
-
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-muted: #94a3b8;
-
-    --accent-color: #4f46e5;
-    --accent-contrast: #ffffff;
-
-    --border-color: #e2e8f0;
-
-    --header-bg: rgba(255, 255, 255, 0.9);
-
-    --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.05);
-    --shadow-md: 0 20px 60px rgba(15, 23, 42, 0.1);
+    --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.8);
+    --shadow-md: 0 40px 100px rgba(0, 0, 0, 0.9);
+    
+    /* Document Config */
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
   }
 
   * {
@@ -80,316 +60,133 @@
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
+    background-color: var(--bg-primary);
   }
 
   body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
     font-family: var(--font-sans);
-    font-size: 16px;
-    line-height: 1.7;
+    font-size: 15px;
+    line-height: 1.5;
     overflow-x: hidden;
-    transition:
-      background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-      color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.01em;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif);
-    font-weight: 400; /* GFS Didot looks best at its natural weight */
-    letter-spacing: -0.01em;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    margin-bottom: 2rem;
     text-transform: uppercase;
   }
 
-  p {
-    margin-bottom: 1.25rem;
-    line-height: 1.8;
-  }
-
-  a {
-    transition: all 0.2s ease;
-  }
-
-  button {
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Refined Selection */
+  ::selection {
+    background: white;
+    color: black;
   }
 }
 
 @layer components {
   /* ========================================
-     BUTTONS - Premium Gold Accent
+     COMPONENTS - Minimalist Precision
      ======================================== */
+  
   .btn-primary {
     font-family: var(--font-sans);
-    background-color: var(--accent-color);
-    color: var(--accent-contrast);
-    padding: 1rem 2.25rem;
-    border-radius: 4px;
-    font-weight: 800;
-    font-size: 0.85rem;
-    letter-spacing: 0.15em;
+    background-color: white;
+    color: black;
+    padding: 1.5rem 4rem;
+    border-radius: 0;
+    font-weight: 900;
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
     text-transform: uppercase;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
-    box-shadow: 0 10px 20px -5px rgba(201, 162, 39, 0.3);
+    border: 1px solid white;
   }
 
   .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 30px -5px rgba(201, 162, 39, 0.4);
-    filter: brightness(1.1);
+    background-color: transparent;
+    color: white;
+    letter-spacing: 0.6em;
   }
 
   .btn-outline {
     font-family: var(--font-sans);
     background-color: transparent;
-    border: 1.5px solid var(--accent-color);
-    color: var(--accent-color);
-    padding: 1rem 2.25rem;
-    border-radius: 4px;
-    font-weight: 800;
-    font-size: 0.85rem;
-    letter-spacing: 0.15em;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 1.5rem 4rem;
+    border-radius: 0;
+    font-weight: 900;
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
     text-transform: uppercase;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
+    transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
   }
 
   .btn-outline:hover {
-    background-color: var(--accent-color);
-    color: var(--accent-contrast);
+    border-color: white;
+    background-color: white;
+    color: black;
   }
 
-  .btn-large {
-    padding: 1.25rem 3rem;
-  }
-
-  /* ========================================
-     CONTAINERS
-     ======================================== */
   .container-custom {
     width: 100%;
-    max-width: 1400px;
+    max-width: 1800px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 8vw;
   }
 
-  @media (min-width: 768px) {
-    .container-custom {
-      padding: 0 4rem;
-    }
-  }
-
-  .section-padding {
-    padding: 5rem 0;
-  }
-
-  @media (min-width: 1024px) {
-    .section-padding {
-      padding: 10rem 0;
-    }
-  }
-
-  /* ========================================
-     GLASS HEADER
-     ======================================== */
   .glass-header {
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
     background-color: var(--header-bg);
     border-bottom: 1px solid var(--border-color);
   }
 
-  /* ========================================
-     CARDS
-     ======================================== */
   .card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
-    transition: all 0.4s ease;
+    transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
   }
 
   .card:hover {
-    border-color: var(--accent-color);
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
+    border-color: rgba(255, 255, 255, 0.3);
   }
 
-  /* ========================================
-     FORMS
-     ======================================== */
   .form-input {
     font-family: var(--font-sans);
     width: 100%;
-    background-color: var(--bg-primary);
-    border: 1.5px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1rem 1.25rem;
-    color: var(--text-primary);
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0;
+    padding: 1.5rem 0;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 200;
+    transition: all 0.6s ease;
     outline: none;
   }
 
   .form-input:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
-    background-color: var(--bg-card);
-  }
-
-  /* ========================================
-     UTILITIES
-     ======================================== */
-  .text-accent {
-    color: var(--accent-color);
-  }
-  .bg-accent {
-    background-color: var(--accent-color);
-  }
-  .border-accent {
-    border-color: var(--accent-color);
+    border-bottom-color: white;
   }
 
   .gradient-text {
-    background: var(--background-image-indigo-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 800;
-  }
-
-  @keyframes spin-slow {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .animate-spin-slow {
-    animation: spin-slow 8s linear infinite;
-  }
-
-  /* Hide scrollbar utility */
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* Custom scrollbar for containers */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: var(--bg-secondary);
-    border-radius: 10px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: var(--accent-color);
-    border-radius: 10px;
-  }
-
-  /* Shimmer loading animation */
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
-    }
-  }
-
-  .animate-shimmer {
-    background: linear-gradient(
-      90deg,
-      var(--bg-secondary) 25%,
-      var(--bg-card) 50%,
-      var(--bg-secondary) 75%
-    );
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-  }
-
-  /* Float animation */
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  /* Pulse glow */
-  @keyframes pulse-glow {
-    0%,
-    100% {
-      box-shadow: 0 0 20px var(--accent-color);
-    }
-    50% {
-      box-shadow:
-        0 0 40px var(--accent-color),
-        0 0 60px var(--accent-color);
-    }
-  }
-
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
-  }
-
-  /* Line clamp utilities */
-  .line-clamp-1 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-  }
-  .line-clamp-2 {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    color: white; /* Removed gradient for "won't attract" (high-end minimal) */
   }
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--accent-color);
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-color);
-  filter: brightness(1.2);
-}
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #050505; }
+::-webkit-scrollbar-thumb { background: #333333; }
+::-webkit-scrollbar-thumb:hover { background: #555555; }

@@ -4,54 +4,49 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Collections from "./pages/Collections";
-import Portfolio from "./pages/Portfolio";
-import Shop from "./pages/Shop";
-import Services from "./pages/Services";
-import Contact from "./pages/Contact";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Profile from "./pages/Profile";
-import Checkout from "./pages/Checkout";
-import AdminDashboard from "./pages/AdminDashboard";
-import StaffDashboard from "./pages/StaffDashboard";
+
+// Lazy load pages for better performance
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Collections = lazy(() => import("./pages/Collections"));
+const Portfolio = lazy(() => import("./pages/Portfolio"));
+const Shop = lazy(() => import("./pages/Shop"));
+const Services = lazy(() => import("./pages/Services"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
+const Profile = lazy(() => import("./pages/Profile"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const StaffDashboard = lazy(() => import("./pages/StaffDashboard"));
 
 import { CartProvider } from "./context/CartContext";
 import CartSidebar from "./components/CartSidebar";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { CurrencyProvider } from "./context/CurrencyContext";
 import { SyncProvider } from "./context/SyncContext";
+import { DataProvider } from "./context/DataContext";
+import { WishlistProvider } from "./context/WishlistContext";
+import { ToastProvider } from "./context/ToastContext";
 
-// Navigation wrapper to use hooks
+// Navigation wrapper to manage unified heritage state
 function AppContent() {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
   const { user, login, logout } = useAuth();
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
+    // Force static architectural theme
+    document.documentElement.setAttribute("data-theme", "dark");
+    document.documentElement.classList.add("dark");
+  }, []);
 
   const ProtectedRoute = ({ children, allowedRoles }) => {
     if (!user) {
       return <Navigate to="/login" replace />;
     }
     if (allowedRoles && !allowedRoles.includes(user.role)) {
-      // Redirect based on their actual role if they try to access unauthorized pages
       if (user.role === "admin") return <Navigate to="/admin" replace />;
       if (user.role === "staff") return <Navigate to="/staff" replace />;
       return <Navigate to="/shop" replace />;
@@ -61,16 +56,15 @@ function AppContent() {
 
   return (
     <CartProvider>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-black selection:bg-white selection:text-black">
         <Navbar
-          theme={theme}
-          toggleTheme={toggleTheme}
           user={user}
           logout={logout}
         />
         <main className="flex-grow">
-          <Routes>
-            {/* Public Routes */}
+          <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-black"><div className="text-center"><div className="w-16 h-16 border-t-2 border-white rounded-full animate-spin mx-auto mb-8"></div><p className="text-white/40 text-xs uppercase tracking-widest">Loading...</p></div></div>}>
+            <Routes>
+            {/* Public Archive */}
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/collections" element={<Collections />} />
@@ -80,7 +74,7 @@ function AppContent() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login handleLogin={login} />} />
 
-            {/* Client Routes */}
+            {/* Private Access */}
             <Route
               path="/shop"
               element={
@@ -106,7 +100,7 @@ function AppContent() {
               }
             />
 
-            {/* Admin Routes */}
+            {/* Command Centers */}
             <Route
               path="/admin"
               element={
@@ -115,8 +109,6 @@ function AppContent() {
                 </ProtectedRoute>
               }
             />
-
-            {/* Staff Routes */}
             <Route
               path="/staff"
               element={
@@ -126,6 +118,7 @@ function AppContent() {
               }
             />
           </Routes>
+          </Suspense>
         </main>
         <Footer />
         <CartSidebar />
@@ -134,19 +127,21 @@ function AppContent() {
   );
 }
 
-import { DataProvider } from "./context/DataContext";
-
 function App() {
   return (
     <Router>
       <AuthProvider>
-        <DataProvider>
-          <CurrencyProvider>
-            <SyncProvider>
-              <AppContent />
-            </SyncProvider>
-          </CurrencyProvider>
-        </DataProvider>
+        <ToastProvider>
+          <DataProvider>
+            <WishlistProvider>
+              <CurrencyProvider>
+                <SyncProvider>
+                  <AppContent />
+                </SyncProvider>
+              </CurrencyProvider>
+            </WishlistProvider>
+          </DataProvider>
+        </ToastProvider>
       </AuthProvider>
     </Router>
   );
